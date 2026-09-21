@@ -1,82 +1,104 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { mapNames } from "../data/storyData";
+import MapHeader from "../components/MapHeader";
+import GameMap from "../components/GameMap";
+import MapLegend from "../components/MapLegend";
+import { mapsData } from "../data/mapsData";
 
 /**
  * pages/Game.jsx
  * 
- * Pantalla de juego dinámica con parámetro de ruta (:mapa).
- * Hace uso del hook `useParams` de React Router DOM para capturar el valor
- * presente en la URL (por ejemplo: 'casa-mishi', 'techos', 'casa-yosu').
- * 
- * Cumple con los requisitos solicitados:
- * - Muestra el nombre legible del mapa obtenido desde useParams.
- * - Muestra el mensaje temporal: “Aquí comenzará el mapa de Mishi”.
- * - Incluye un botón para regresar al inicio.
- * - Mantiene un diseño visual coherente, retro y cozy.
+ * Pantalla principal de juego que integra la cuadrícula visual de los mapas:
+ * 1. Lee el parámetro de ruta ':mapa' con `useParams`.
+ * 2. Consulta `mapsData[mapa]`.
+ * 3. Si no existe, muestra un mensaje de error amigable y botón de retorno.
+ * 4. Inicializa la posición de Mishi mediante `useState` con `map.startPosition`.
+ * 5. Muestra `MapHeader`, `GameMap`, `MapLegend` y el aviso didáctico de movimiento.
  */
 export default function Game() {
-  // Obtenemos el parámetro dinámico ':mapa' de la URL actual
   const { mapa } = useParams();
 
-  // Convertimos el parámetro en su nombre legible según las reglas dadas
-  const mapDisplayName = mapNames[mapa] || "Mapa Desconocido";
+  // Buscar el mapa en la estructura de datos
+  const currentMap = mapsData[mapa];
+
+  // Estado temporal de la posición de Mishi, inicializado con la posición de inicio del mapa
+  const [mishiPosition, setMishiPosition] = useState(
+    currentMap ? currentMap.startPosition : { row: 0, col: 0 }
+  );
+
+  // Sincronizar la posición cuando el parámetro de la URL cambia
+  useEffect(() => {
+    if (currentMap) {
+      setMishiPosition(currentMap.startPosition);
+    }
+  }, [mapa]);
+
+  // Manejo de error si el mapa no existe en los datos
+  if (!currentMap) {
+    return (
+      <div className="page page--game-error">
+        <div className="cozy-error-card">
+          <div className="error-icon">😿</div>
+          <h2 className="error-title">Mapa no encontrado</h2>
+          <p className="error-message">
+            El mapa con identificador <code>"{mapa}"</code> no existe en los datos del juego.
+          </p>
+          <div className="error-actions">
+            <Link to="/" className="cozy-btn cozy-btn--secondary">
+              🏠 Volver al inicio
+            </Link>
+            <Link to="/jugar/casa-mishi" className="cozy-btn cozy-btn--hero">
+              🐾 Ir a la Casa de Mishi
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="page page--game">
-      <div className="cozy-game-placeholder-card">
-        {/* Cabecera del Nivel */}
-        <div className="game-stage-header">
-          <div className="stage-param-tag">
-            <span>Ruta activa: <code>/jugar/{mapa}</code></span>
-          </div>
-          <h2 className="stage-title">{mapDisplayName}</h2>
-        </div>
+      {/* 1. Encabezado del Mapa */}
+      <MapHeader
+        mapName={currentMap.name}
+        objective={currentMap.objective}
+        progress={`0 / ${currentMap.puzzles.length} Puzzles`}
+      />
 
-        {/* Mensaje temporal requerido */}
-        <div className="stage-announcement-box">
-          <div className="stage-cat-icon">🐱</div>
-          <p className="stage-message-text">
-            “Aquí comenzará el mapa de Mishi”.
-          </p>
-          <small className="stage-hint-text">
-            (En la siguiente fase, aquí se renderizará la cuadrícula interactiva con Mishi, los objetos y los puzzles de exploración).
-          </small>
+      {/* Selector de prueba de mapas */}
+      <div className="map-quick-selector" role="navigation" aria-label="Cambiar entre mapas">
+        <span className="selector-title">📍 Explorar los tres mapas:</span>
+        <div className="selector-links">
+          {Object.values(mapsData).map((m) => (
+            <Link
+              key={m.id}
+              to={`/jugar/${m.id}`}
+              className={`selector-chip ${m.id === currentMap.id ? "selector-chip--active" : ""}`}
+            >
+              {m.name} ({m.rows}x{m.cols})
+            </Link>
+          ))}
         </div>
+      </div>
 
-        {/* Barra de prueba de rutas dinámicas para verificar useParams */}
-        <div className="stage-map-tester">
-          <span className="tester-label">Probar otros mapas con useParams:</span>
-          <div className="tester-buttons">
-            <Link
-              to="/jugar/casa-mishi"
-              className={`tester-btn ${mapa === "casa-mishi" ? "tester-btn--active" : ""}`}
-            >
-              1. Casa de Mishi
-            </Link>
-            <Link
-              to="/jugar/techos"
-              className={`tester-btn ${mapa === "techos" ? "tester-btn--active" : ""}`}
-            >
-              2. Techos y vecindario
-            </Link>
-            <Link
-              to="/jugar/casa-yosu"
-              className={`tester-btn ${mapa === "casa-yosu" ? "tester-btn--active" : ""}`}
-            >
-              3. Casa de Yosu
-            </Link>
-          </div>
-        </div>
+      {/* 2. Cuadrícula Visual del Mapa */}
+      <section className="game-stage-container" aria-label={`Escenario de ${currentMap.name}`}>
+        <GameMap
+          map={currentMap}
+          mishiPosition={mishiPosition}
+        />
+      </section>
 
-        {/* Botón para regresar al inicio */}
-        <div className="stage-footer-actions">
-          <Link to="/" className="cozy-btn cozy-btn--secondary">
-            🏠 Regresar al inicio
-          </Link>
-          <Link to="/completado" className="cozy-btn cozy-btn--accent">
-            ✨ Vista previa de pantalla de finalización
-          </Link>
+      {/* 3. Leyenda del Mapa */}
+      <MapLegend />
+
+      {/* 4. Aviso didáctico de la etapa */}
+      <div className="stage-notice-banner" role="note">
+        <span className="notice-icon">ℹ️</span>
+        <div className="notice-text">
+          <strong>Etapa visual:</strong> Mishi se encuentra en su posición inicial 
+          <code>(Fila {mishiPosition.row + 1}, Columna {mishiPosition.col + 1})</code>. 
+          El movimiento con teclado/táctil, la detección de colisiones y la resolución de puzzles se agregarán en la siguiente etapa.
         </div>
       </div>
     </div>

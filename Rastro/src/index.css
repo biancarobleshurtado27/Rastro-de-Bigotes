@@ -1,111 +1,1026 @@
+/* ==========================================================================
+   Rastro de Bigotes - Estilos Globales Retro Pixel-Art Pastel
+   ========================================================================== */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Paleta Pastel Cálida y Relajante */
+  --bg-cream: #faf5ed;
+  --bg-card: #fffdfa;
+  --pastel-pink: #ffd6e0;
+  --pastel-pink-dark: #f8a5b8;
+  --pastel-lilac: #e3d5ff;
+  --pastel-lilac-dark: #c4a9f8;
+  --pastel-blue: #cde7ff;
+  --pastel-blue-dark: #97cdfc;
+  --pastel-mint: #d1f4e0;
+  --pastel-yellow: #fff3bf;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Contornos y Sombras Retro (Duras, sin difuminado) */
+  --retro-border: 3px solid #2c243b;
+  --retro-border-thick: 4px solid #2c243b;
+  --retro-shadow: 4px 4px 0px #2c243b;
+  --retro-shadow-large: 6px 6px 0px #2c243b;
+  --retro-shadow-small: 2px 2px 0px #2c243b;
+  --retro-shadow-pressed: 1px 1px 0px #2c243b;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Tipografías */
+  --font-retro-pixel: "Pixelify Sans", "VT323", monospace, system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Texto */
+  --text-dark: #2c243b;
+  --text-muted: #5e526e;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  /* Patrón de puntos sutil de fondo para estética de cuaderno / arcade */
+  background-image: radial-gradient(#dfd4c5 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+/* Enlaces sin subrayado por defecto */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Estructura Principal de la Aplicación
+   ========================================================================== */
+.app-container {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  min-height: 100vh;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+.main-content {
+  flex: 1;
+  padding: 20px 0;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+.page {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+/* ==========================================================================
+   Barra de Navegación (Navbar)
+   ========================================================================== */
+.retro-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--pastel-pink);
+  border: var(--retro-border-thick);
+  box-shadow: var(--retro-shadow);
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
+.retro-navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.retro-navbar__cat-icon {
+  font-size: 1.8rem;
+  background-color: #fff;
+  border: var(--retro-border);
+  padding: 2px 6px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.retro-navbar__title {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.5px;
+}
+
+.retro-navbar__nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Botones Retro Estilo Arcade / Pixel
+   ========================================================================== */
+.retro-btn {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-retro-pixel);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 10px 18px;
+  background-color: var(--bg-card);
+  color: var(--text-dark);
+  border: var(--retro-border);
+  box-shadow: var(--retro-shadow);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+  text-align: center;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.retro-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--retro-shadow-large);
+  background-color: #ffffff;
+}
+
+.retro-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: var(--retro-shadow-pressed);
+}
+
+.retro-btn--primary {
+  background-color: var(--pastel-lilac);
+}
+
+.retro-btn--primary:hover {
+  background-color: var(--pastel-lilac-dark);
+}
+
+.retro-btn--accent {
+  background-color: var(--pastel-pink);
+}
+
+.retro-btn--accent:hover {
+  background-color: var(--pastel-pink-dark);
+}
+
+.retro-btn--action {
+  background-color: var(--pastel-blue);
+}
+
+.retro-btn--action:hover {
+  background-color: var(--pastel-blue-dark);
+}
+
+.retro-btn--nav {
+  padding: 8px 14px;
+  font-size: 0.95rem;
+}
+
+.retro-btn--active {
+  background-color: var(--pastel-yellow);
+  box-shadow: var(--retro-shadow-small);
+  transform: translate(2px, 2px);
+}
+
+.retro-btn--large {
+  padding: 14px 28px;
+  font-size: 1.15rem;
+}
+
+.retro-btn--small {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+
+.retro-btn--full {
+  width: 100%;
+}
+
+.retro-btn--pulsing {
+  animation: pulseScale 1.8s infinite;
+}
+
+@keyframes pulseScale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+/* ==========================================================================
+   Componente PixelCard
+   ========================================================================== */
+.pixel-card {
+  border: var(--retro-border-thick);
+  box-shadow: var(--retro-shadow);
+  background-color: var(--bg-card);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.pixel-card--pink {
+  background-color: #fff8fa;
+  border-color: #3b2836;
+}
+
+.pixel-card--lilac {
+  background-color: #fcf9ff;
+  border-color: #31283d;
+}
+
+.pixel-card--blue {
+  background-color: #f7fbff;
+  border-color: #24303b;
+}
+
+.pixel-card--cream {
+  background-color: var(--bg-card);
+}
+
+.pixel-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: var(--retro-border);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.pixel-card__title {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.15rem;
+  color: var(--text-dark);
+}
+
+.pixel-card__body {
+  font-size: 0.98rem;
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   Cuadro de Diálogo Estilo RPG / Videojuego (DialogueBox)
+   ========================================================================== */
+.dialogue-box {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--bg-card);
+  border: var(--retro-border-thick);
+  box-shadow: var(--retro-shadow-large);
+  padding: 16px;
+  gap: 16px;
+  align-items: center;
+}
+
+.dialogue-box__portrait-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 100px;
+}
+
+.dialogue-box__portrait {
+  width: 80px;
+  height: 80px;
+  background-color: var(--pastel-pink);
+  border: var(--retro-border);
+  box-shadow: var(--retro-shadow-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pixel-cat-avatar {
+  position: relative;
+  font-size: 2.5rem;
+}
+
+.cat-ribbon {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 1.1rem;
+}
+
+.dialogue-box__speaker-badge {
+  font-family: var(--font-retro-pixel);
+  font-weight: 700;
+  font-size: 0.9rem;
+  background-color: var(--pastel-yellow);
+  border: var(--retro-border);
+  padding: 2px 8px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.dialogue-box__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialogue-box__bubble {
+  background-color: #ffffff;
+  border: var(--retro-border);
+  padding: 14px 18px;
+  box-shadow: var(--retro-shadow-small);
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.dialogue-box__text {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.1rem;
+  color: #1e1928;
+  line-height: 1.5;
+}
+
+.dialogue-box__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dialogue-box__counter {
+  font-family: var(--font-retro-pixel);
+  font-size: 0.85rem;
+  background-color: var(--pastel-blue);
+  border: var(--retro-border);
+  padding: 3px 8px;
+}
+
+/* ==========================================================================
+   CSS Grid: Cuadrícula del Juego (GameGridPreview)
+   ========================================================================== */
+.game-grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-grid-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.85rem;
+  background-color: #fff;
+  border: var(--retro-border);
+  padding: 8px 14px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Definición de la Cuadrícula usando CSS Grid */
+.retro-game-grid {
+  display: grid;
+  grid-template-rows: repeat(var(--grid-rows, 6), 56px);
+  grid-template-columns: repeat(var(--grid-cols, 6), 56px);
+  gap: 4px;
+  background-color: var(--text-dark);
+  border: var(--retro-border-thick);
+  box-shadow: var(--retro-shadow-large);
+  padding: 6px;
+}
+
+.grid-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  user-select: none;
+  position: relative;
+  transition: transform 0.1s ease;
+}
+
+.grid-cell:hover {
+  filter: brightness(1.08);
+}
+
+.cell-entity {
+  font-size: 1.6rem;
+  animation: cellBounce 1.5s infinite ease-in-out;
+}
+
+@keyframes cellBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Tipos de celdas según el suelo o entidad */
+.grid-cell--floor {
+  background-color: #ffe6cf;
+}
+
+.grid-cell--wall {
+  background-color: #927e8d;
+}
+
+.grid-cell--player {
+  background-color: var(--pastel-pink);
+  border-color: #b9426b;
+}
+
+.grid-cell--exit {
+  background-color: var(--pastel-mint);
+  border-color: #278652;
+}
+
+.grid-cell--clue {
+  background-color: var(--pastel-yellow);
+  border-color: #d1970b;
+}
+
+/* ==========================================================================
+   Página Home
+   ========================================================================== */
+.home-hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.home-hero__badge {
+  display: inline-block;
+  font-family: var(--font-retro-pixel);
+  font-size: 0.85rem;
+  background-color: var(--pastel-yellow);
+  border: var(--retro-border);
+  padding: 4px 12px;
+  margin-bottom: 8px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.home-hero__title {
+  font-family: var(--font-retro-pixel);
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  text-shadow: 2px 2px 0px var(--pastel-pink-dark);
+  margin-bottom: 6px;
+}
+
+.home-hero__subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 20px;
+}
+
+.mishi-presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.pixel-art-cat-banner {
+  background-color: var(--pastel-pink);
+  border: var(--retro-border);
+  padding: 16px 28px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.pixel-cat-portrait.large {
+  position: relative;
+  font-size: 4rem;
+}
+
+.pixel-cat-portrait.large .cat-accessory {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  font-size: 1.8rem;
+}
+
+.mishi-bio h4 {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.story-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.story-action-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.home-dialogue-section {
+  margin: 30px 0;
+}
+
+.section-title-retro {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  background-color: var(--pastel-lilac);
+  border: var(--retro-border);
+  padding: 4px 10px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.dialogue-helper {
+  margin-top: 8px;
+  text-align: right;
+  color: var(--text-muted);
+}
+
+.home-maps-preview {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: var(--bg-card);
+  border: var(--retro-border);
+  box-shadow: var(--retro-shadow);
+  text-align: center;
+}
+
+.section-subtitle {
+  font-family: var(--font-retro-pixel);
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.maps-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.map-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--pastel-blue);
+  border: var(--retro-border);
+  padding: 6px 14px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.map-num {
+  font-family: var(--font-retro-pixel);
+  background-color: #fff;
+  border: var(--retro-border);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.map-arrow {
+  font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   Página Instrucciones
+   ========================================================================== */
+.instructions-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.retro-page-title {
+  font-family: var(--font-retro-pixel);
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.retro-page-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.instructions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.instruction-list {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.controls-preview-section {
+  margin-top: 10px;
+}
+
+.dpad-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.virtual-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--pastel-pink);
+  border: var(--retro-border);
+  padding: 16px;
+  box-shadow: var(--retro-shadow);
+}
+
+.dpad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.retro-dpad-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 1.3rem;
+  border: var(--retro-border);
+  background-color: #ffffff;
+  box-shadow: var(--retro-shadow-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+
+.dpad-action {
+  background-color: var(--pastel-yellow);
+}
+
+.instructions-footer {
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Página Juego (Game)
+   ========================================================================== */
+.warning-banner {
+  background-color: var(--pastel-yellow);
+  border: var(--retro-border);
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.game-header {
+  margin-bottom: 16px;
+}
+
+.game-header__badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-family: var(--font-retro-pixel);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border: var(--retro-border);
+  box-shadow: var(--retro-shadow-small);
+}
+
+.badge--stage {
+  background-color: var(--pastel-lilac);
+}
+
+.badge--param {
+  background-color: var(--pastel-blue);
+}
+
+.game-header__title {
+  font-family: var(--font-retro-pixel);
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.game-header__description {
+  color: var(--text-muted);
+}
+
+.map-selector-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: var(--bg-card);
+  border: var(--retro-border);
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  box-shadow: var(--retro-shadow-small);
+  flex-wrap: wrap;
+}
+
+.map-selector-label {
+  font-family: var(--font-retro-pixel);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.map-selector-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.puzzle-text {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.puzzle-hint-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--pastel-yellow);
+  border: var(--retro-border);
+  padding: 8px 12px;
+  margin-top: 10px;
+}
+
+.hint-icon {
+  font-size: 1.2rem;
+}
+
+.controls-note {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  color: var(--text-muted);
+}
+
+.dpad-interactive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--pastel-lilac);
+  border: var(--retro-border);
+  padding: 16px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.retro-control-btn {
+  width: 58px;
+  height: 58px;
+  font-size: 1.4rem;
+  background-color: #ffffff;
+  border: var(--retro-border);
+  box-shadow: var(--retro-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+}
+
+.retro-control-btn:hover {
+  background-color: var(--pastel-pink);
+  transform: translate(-1px, -1px);
+}
+
+.retro-control-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--retro-shadow-pressed);
+}
+
+.retro-control-btn--action {
+  background-color: var(--pastel-yellow);
+}
+
+.level-progression-box {
+  margin-top: 16px;
+}
+
+/* ==========================================================================
+   Página Finalización (Completion)
+   ========================================================================== */
+.page--completion {
+  text-align: center;
+}
+
+.completion-hero {
+  margin-bottom: 24px;
+}
+
+.hearts-cluster {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  animation: pulseScale 1.5s infinite;
+}
+
+.completion-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.reunion-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.cats-together {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: var(--pastel-pink);
+  border: var(--retro-border);
+  padding: 20px 30px;
+  box-shadow: var(--retro-shadow-small);
+}
+
+.cat-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.cat-figure .cat-sprite {
+  font-size: 3rem;
+}
+
+.cat-figure .cat-name {
+  font-family: var(--font-retro-pixel);
+  font-size: 0.9rem;
+}
+
+.love-icon {
+  font-size: 2.5rem;
+  animation: pulseScale 1s infinite alternate;
+}
+
+.reunion-dialogue {
+  background-color: #fff;
+  border: var(--retro-border);
+  padding: 16px;
+  box-shadow: var(--retro-shadow-small);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dialogue-quote {
+  font-family: var(--font-retro-pixel);
+  font-size: 0.95rem;
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border: var(--retro-border);
+  font-family: var(--font-retro-pixel);
+  font-size: 0.9rem;
+}
+
+.completion-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Pie de Página (Footer)
+   ========================================================================== */
+.retro-footer {
+  border-top: var(--retro-border);
+  padding: 16px 0;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.retro-footer p {
+  margin: 4px 0;
+}
+
+/* ==========================================================================
+   Responsive: Adaptación para Tablets y Móviles
+   ========================================================================== */
+@media (max-width: 820px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .retro-navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .retro-navbar__nav {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .dialogue-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dialogue-box__bubble {
+    text-align: left;
+  }
+
+  .home-hero__title {
+    font-size: 2rem;
+  }
+
+  .retro-game-grid {
+    grid-template-rows: repeat(var(--grid-rows, 6), 46px);
+    grid-template-columns: repeat(var(--grid-cols, 6), 46px);
+  }
+
+  .cell-entity {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .retro-game-grid {
+    grid-template-rows: repeat(var(--grid-rows, 6), 38px);
+    grid-template-columns: repeat(var(--grid-cols, 6), 38px);
+    padding: 4px;
+    gap: 2px;
+  }
+
+  .cell-entity {
+    font-size: 1.1rem;
+  }
+
+  .retro-control-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
 }

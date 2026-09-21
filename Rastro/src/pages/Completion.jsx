@@ -1,80 +1,97 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PixelCard from "../components/PixelCard";
 
 /**
  * pages/Completion.jsx
  * 
- * Pantalla final de victoria y reencuentro.
- * Se muestra cuando Mishi completa los tres mapas y finalmente
- * encuentra a su compañero Yosu.
+ * Pantalla final del RPG Cozy "Rastro de Bigotes".
+ * Muestra el reencuentro de Mishi y Yosu al atardecer en el porche,
+ * envueltos en una atmósfera cálida, con diálogo entrañable y música figurada de satisfacción.
  */
 export default function Completion() {
   return (
-    <div className="page page--completion">
-      <section className="completion-hero">
-        <div className="hearts-cluster">💖 🐾 💕</div>
-        <h1 className="retro-page-title">¡Misión Cumplida!</h1>
-        <p className="retro-page-subtitle">
-          ¡Mishi ha seguido el rastro de bigotes hasta el final!
+    <div className="page page--rpg-completion">
+      <div className="cozy-completion-card">
+        {/* Cabecera festiva y tierna */}
+        <div className="completion-hearts-float">
+          <span>💖</span>
+          <span>🐾</span>
+          <span>💕</span>
+        </div>
+
+        <h1 className="completion-title">¡Juntos otra vez!</h1>
+        <p className="completion-subtitle">
+          El rastro de bigotes guio a Mishi directamente hasta los brazos de Yosu.
         </p>
-      </section>
 
-      <div className="completion-content">
-        <PixelCard title="El Reencuentro de Mishi y Yosu" variant="pink">
-          <div className="reunion-scene">
-            <div className="cats-together">
-              <div className="cat-figure">
-                <span className="cat-sprite">🐱</span>
-                <span className="cat-name">Mishi 🎀</span>
-              </div>
-              <div className="love-icon">❤️</div>
-              <div className="cat-figure">
-                <span className="cat-sprite">🐱</span>
-                <span className="cat-name">Yosu 🐟</span>
-              </div>
+        {/* Escena del reencuentro pixel art */}
+        <div className="reunion-diorama">
+          <div className="reunion-sky">
+            <span className="reunion-star">✨</span>
+            <span className="reunion-cloud">☁️</span>
+            <span className="reunion-star">✨</span>
+          </div>
+
+          <div className="reunion-cats-porch">
+            <div className="cat-reunion-figure">
+              <div className="cat-sprite-large">🐱</div>
+              <span className="cat-tag">Mishi 🎀</span>
             </div>
 
-            <div className="reunion-dialogue">
-              <p className="dialogue-quote">
-                <strong>Yosu:</strong> "¡Mishi! Sabía que vendrías por mí. Me quedé dormido
-                en este cálido rincón bajo el sol y no me di cuenta de cuántos días pasaron..."
-              </p>
-              <p className="dialogue-quote">
-                <strong>Mishi:</strong> "¡Nunca dejaría de buscarte! Seguí cada uno de tus
-                bigotes por toda la ciudad."
-              </p>
+            <div className="reunion-heart-badge">❤️</div>
+
+            <div className="cat-reunion-figure">
+              <div className="cat-sprite-large">🐱</div>
+              <span className="cat-tag">Yosu 🐟</span>
             </div>
           </div>
-        </PixelCard>
 
-        <PixelCard title="Resumen de la Aventura" variant="lilac">
-          <div className="stats-list">
-            <div className="stat-row">
-              <span>🏠 Mapa 1: Casa de Mishi</span>
-              <span className="stat-status">✅ Resuelto</span>
-            </div>
-            <div className="stat-row">
-              <span>🏙️ Mapa 2: Techo y Vecindario</span>
-              <span className="stat-status">✅ Resuelto</span>
-            </div>
-            <div className="stat-row">
-              <span>🏡 Mapa 3: Casa de Yosu</span>
-              <span className="stat-status">✅ Resuelto</span>
-            </div>
+          <div className="reunion-porch-floor">
+            <span>🪵 Porche cálido bajo el farol encendido</span>
           </div>
-        </PixelCard>
-      </div>
+        </div>
 
-      <div className="completion-actions">
-        <Link to="/jugar/casa-mishi" className="retro-btn retro-btn--accent retro-btn--large">
-          🔄 Jugar de nuevo
-        </Link>
-        <Link to="/" className="retro-btn retro-btn--primary retro-btn--large">
-          🏠 Volver al inicio
-        </Link>
+        {/* Diálogo final entre ambos */}
+        <div className="reunion-dialogue-box">
+          <p className="reunion-speech">
+            <strong>Yosu:</strong> "¡Mishi! Escuché tus pasos sigilosos desde el jardín.
+            Me quedé dormido esperando las estrellas, pero nunca dudé de que encontrarías mi rastro."
+          </p>
+          <p className="reunion-speech">
+            <strong>Mishi:</strong> "¡Nunca me rendiría, Yosu! Crucé la habitación, los tejados
+            del vecindario y las chimeneas para estar aquí contigo."
+          </p>
+        </div>
+
+        {/* Resumen de las 3 etapas completadas */}
+        <div className="completion-stages-summary">
+          <div className="stage-stamp">
+            <span className="stamp-icon">🏠</span>
+            <span className="stamp-name">1. Casa de Mishi</span>
+            <span className="stamp-check">✅</span>
+          </div>
+          <div className="stage-stamp">
+            <span className="stamp-icon">🏙️</span>
+            <span className="stamp-name">2. Techos y Vecindario</span>
+            <span className="stamp-check">✅</span>
+          </div>
+          <div className="stage-stamp">
+            <span className="stamp-icon">🏡</span>
+            <span className="stamp-name">3. Casa de Yosu</span>
+            <span className="stamp-check">✅</span>
+          </div>
+        </div>
+
+        {/* Botones de acción final */}
+        <div className="completion-actions-group">
+          <Link to="/jugar/casa-mishi" className="cozy-rpg-btn cozy-rpg-btn--hero">
+            🔄 Jugar de nuevo
+          </Link>
+          <Link to="/" className="cozy-rpg-btn cozy-rpg-btn--secondary">
+            🏠 Volver a la portada
+          </Link>
+        </div>
       </div>
     </div>
   );
 }
-

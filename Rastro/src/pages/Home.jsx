@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import PixelCard from "../components/PixelCard";
+import { useNavigate, Link } from "react-router-dom";
 import DialogueBox from "../components/DialogueBox";
 import { initialStoryDialogues } from "../data/dialogues";
 import { useDialogue } from "../hooks/useDialogue";
@@ -8,16 +7,17 @@ import { useDialogue } from "../hooks/useDialogue";
 /**
  * pages/Home.jsx
  * 
- * Pantalla de inicio de "Rastro de Bigotes".
- * Presenta el título, la protagonista Mishi, la premisa emocional y
- * permite activar la secuencia de cuadros de diálogo tipo RPG para
- * comenzar la aventura hacia el primer mapa.
+ * Portada oficial del RPG Cozy "Rastro de Bigotes".
+ * Diseñada como una pantalla de inicio clásica de RPG de exploración:
+ * - Escena ilustrada con Mishi en su habitación cálida mirando el atardecer por la ventana.
+ * - Título con tipografía pixel art retro y colores pastel cálidos (crema, durazno, rosa).
+ * - Menú acogedor estilo pergamino con opciones para iniciar la historia o consultar el diario de viaje.
+ * - Secuencia de diálogos emotivos donde Mishi recuerda y extraña a Yosu.
  */
 export default function Home() {
   const navigate = useNavigate();
   const [storyStarted, setStoryStarted] = useState(false);
 
-  // Hook personalizado para controlar los diálogos de Mishi
   const {
     currentIndex,
     currentDialogue,
@@ -34,117 +34,131 @@ export default function Home() {
   };
 
   const handleGoToFirstMap = () => {
-    // Redirige al primer mapa del juego usando React Router
     navigate("/jugar/casa-mishi");
   };
 
   return (
-    <div className="page page--home">
-      {/* Sección Hero / Portada */}
-      <section className="home-hero">
-        <div className="home-hero__badge">🐾 Aventura 2D de Puzzles</div>
-        <h1 className="home-hero__title">Rastro de Bigotes</h1>
-        <p className="home-hero__subtitle">
-          Una pequeña gatita con una gran misión de amor.
-        </p>
-      </section>
+    <div className="page page--rpg-title">
+      {/* Marco principal de la portada RPG */}
+      <div className="rpg-title-screen-frame">
+        {/* Cabecera con Título del Juego */}
+        <header className="rpg-title-header">
+          <div className="rpg-title-tag">🌸 Un RPG Cozy de Exploración y Puzzles</div>
+          <h1 className="rpg-game-logo">Rastro de Bigotes</h1>
+          <p className="rpg-game-tagline">
+            Sigue las huellas, resuelve los misterios y encuentra al gato que extrañas.
+          </p>
+        </header>
 
-      {/* Tarjeta de Presentación de Personajes e Historia */}
-      <div className="home-grid">
-        <PixelCard title="Protagonista: Mishi" variant="pink">
-          <div className="mishi-presentation">
-            <div className="pixel-art-cat-banner">
-              <div className="pixel-cat-portrait large">
-                <span className="cat-sprite">🐱</span>
-                <span className="cat-accessory">🎀</span>
+        {/* Diorama / Escena Ilustrada de Mishi en su hogar */}
+        <div className="rpg-cover-illustration">
+          <div className="cover-room-background">
+            {/* Ventana con rayos de sol del atardecer */}
+            <div className="cover-sun-window">
+              <div className="cover-sky-gradient">
+                <span className="cover-cloud">☁️</span>
               </div>
+              <div className="cover-sunbeams" />
             </div>
 
-            <div className="mishi-bio">
-              <h4>Mishi</h4>
-              <p>
-                Una gatita curiosa de pelaje suave y un moño rosado. Su corazón
-                está preocupado porque su compañero, <strong>Yosu</strong>,
-                ha desaparecido misteriosamente.
-              </p>
+            {/* Cuadro de Yosu y Mishi en la pared */}
+            <div className="cover-wall-frame" title="Foto de Mishi y Yosu">
+              <span className="frame-icon">🖼️</span>
+              <small className="frame-label">Yosu &amp; Mishi</small>
+            </div>
+
+            {/* Estantería y plantas */}
+            <div className="cover-shelf">
+              <span>🪴</span>
+              <span>📚</span>
+            </div>
+
+            {/* Mishi en su cojín durazno */}
+            <div className="cover-mishi-cushion">
+              <div className="mishi-cover-character">
+                <span className="cat-ears">🐱</span>
+                <span className="cat-ribbon">🎀</span>
+              </div>
+              <span className="cushion-base">🛏️</span>
+            </div>
+
+            {/* Juguetes en el suelo de madera */}
+            <div className="cover-floor-toys">
+              <span className="toy-yarn" title="Ovillo de lana">🧶</span>
+              <span className="toy-paw" title="Huella">🐾</span>
             </div>
           </div>
-        </PixelCard>
+        </div>
 
-        <PixelCard title="La Historia" variant="lilac">
-          <div className="story-intro">
-            <p>
-              Mishi y Yosu solían verse todos los atardeceres en el tejado más alto del vecindario.
-              Pero hoy, el lugar está vacío y solo queda una suave brisa.
-            </p>
-            <p>
-              Mishi no se rendirá: recorrerá tres zonas resolviendo puzzles hasta encontrarlo
-              siguiendo las huellas, bigotes caídos y pistas que dejó a su paso.
-            </p>
+        {/* Sin diálogos activos: Menú clásico de RPG */}
+        {!storyStarted ? (
+          <div className="rpg-title-menu">
+            <div className="rpg-menu-scroll">
+              <p className="rpg-prologue-preview">
+                Mishi extraña profundamente a su compañero Yosu. Hoy el tejado estuvo silencioso,
+                pero un rastro de bigotes y huellas frescas en la ventana la invitan a una aventura.
+              </p>
 
-            {!storyStarted && (
-              <div className="story-action-container">
+              <div className="rpg-menu-actions">
                 <button
                   type="button"
                   onClick={handleStartStory}
-                  className="retro-btn retro-btn--primary retro-btn--large"
+                  className="cozy-rpg-btn cozy-rpg-btn--hero"
                 >
                   ✨ Comenzar historia
                 </button>
+
+                <Link
+                  to="/instrucciones"
+                  className="cozy-rpg-btn cozy-rpg-btn--secondary"
+                >
+                  📖 Diario de Aventuras (Instrucciones)
+                </Link>
               </div>
-            )}
+            </div>
+
+            {/* Lista visual de las 3 zonas del viaje */}
+            <div className="rpg-zones-preview-bar">
+              <span className="zone-preview-title">El mapa de la travesía:</span>
+              <div className="zone-preview-chips">
+                <div className="zone-chip">
+                  <span className="zone-chip__num">1</span>
+                  <span>🏠 Casa de Mishi</span>
+                </div>
+                <span className="zone-separator">➔</span>
+                <div className="zone-chip">
+                  <span className="zone-chip__num">2</span>
+                  <span>🏙️ Techos del Vecindario</span>
+                </div>
+                <span className="zone-separator">➔</span>
+                <div className="zone-chip">
+                  <span className="zone-chip__num">3</span>
+                  <span>🏡 Casa de Yosu</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </PixelCard>
+        ) : (
+          /* Con la historia iniciada: Cuadro de diálogo RPG con los recuerdos de Mishi */
+          <div className="rpg-title-dialogue-stage">
+            <div className="dialogue-stage-banner">
+              <span>💭 Prólogo: Los recuerdos de Mishi</span>
+            </div>
+
+            <DialogueBox
+              speaker={currentDialogue.speaker}
+              text={currentDialogue.text}
+              currentIndex={currentIndex}
+              total={total}
+              isLast={isLast}
+              isFinished={isFinished}
+              onNext={nextDialogue}
+              onFinishAction={handleGoToFirstMap}
+              finishButtonText="🐾 Comenzar primer mapa (Casa de Mishi)"
+            />
+          </div>
+        )}
       </div>
-
-      {/* Cuadros de diálogo estilo videojuego cuando se inicia la historia */}
-      {storyStarted && (
-        <section className="home-dialogue-section">
-          <div className="section-title-retro">
-            <span>💭 Recuerdos de Mishi</span>
-          </div>
-
-          <DialogueBox
-            speaker={currentDialogue.speaker}
-            text={currentDialogue.text}
-            currentIndex={currentIndex}
-            total={total}
-            isLast={isLast}
-            isFinished={isFinished}
-            onNext={nextDialogue}
-            onFinishAction={handleGoToFirstMap}
-            finishButtonText="🐾 Comenzar primer mapa (Casa de Mishi)"
-          />
-
-          <div className="dialogue-helper">
-            <small>
-              Haz clic en <strong>"Siguiente"</strong> para continuar escuchando los pensamientos de Mishi.
-            </small>
-          </div>
-        </section>
-      )}
-
-      {/* Vista previa de los 3 mapas */}
-      <section className="home-maps-preview">
-        <h3 className="section-subtitle">El viaje de Mishi:</h3>
-        <div className="maps-badges">
-          <div className="map-badge">
-            <span className="map-num">1</span>
-            <span className="map-name">Casa de Mishi</span>
-          </div>
-          <span className="map-arrow">➡️</span>
-          <div className="map-badge">
-            <span className="map-num">2</span>
-            <span className="map-name">Techo y Vecindario</span>
-          </div>
-          <span className="map-arrow">➡️</span>
-          <div className="map-badge">
-            <span className="map-num">3</span>
-            <span className="map-name">Casa de Yosu</span>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
-

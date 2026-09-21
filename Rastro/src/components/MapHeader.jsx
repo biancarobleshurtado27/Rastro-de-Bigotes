@@ -4,12 +4,8 @@ import { Link } from "react-router-dom";
 /**
  * components/MapHeader.jsx
  * 
- * Barra superior del mapa con estética de RPG clásico cozy.
- * Muestra:
- * - Nombre del mapa activo.
- * - Objetivo actual de exploración.
- * - Indicador de progreso temporal.
- * - Botón para regresar a la página principal.
+ * Barra superior del mapa con estética RPG clásico cozy.
+ * No contiene ningún emoji.
  * 
  * @param {string} mapName Nombre del mapa (ej. "Casa de Mishi").
  * @param {string} objective Objetivo actual del mapa.
@@ -29,10 +25,10 @@ export default function MapHeader({
           className="cozy-btn cozy-btn--secondary map-header-bar__back-btn"
           aria-label="Volver a la portada principal"
         >
-          🏠 Inicio
+          Inicio
         </Link>
         <div className="map-header-bar__titles">
-          <span className="map-header-bar__tag">🐾 RPG 2D Cozy</span>
+          <span className="map-header-bar__tag">Aventura RPG Cozy</span>
           <h2 className="map-header-bar__title">{mapName}</h2>
         </div>
       </div>
@@ -40,16 +36,15 @@ export default function MapHeader({
       {/* Objetivo e indicador de progreso */}
       <div className="map-header-bar__meta">
         <div className="map-objective-box">
-          <span className="map-objective-label">🎯 Objetivo:</span>
+          <span className="map-objective-label">Objetivo:</span>
           <span className="map-objective-text">{objective}</span>
         </div>
 
         <div className="map-progress-pill" title="Progreso del mapa">
-          <span className="map-progress-icon">🧩</span>
+          <span className="map-progress-label">Progreso:</span>
           <span className="map-progress-text">{progress}</span>
         </div>
       </div>
     </div>
   );
 }
-

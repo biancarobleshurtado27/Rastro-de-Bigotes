@@ -899,8 +899,11 @@ a:focus-visible {
 
 /* ==========================================================================
    Tile.jsx - Tipos de Casillas
+   Nota: el componente emite clases "tile tile-{type}".
+   Se mantienen ambos prefijos (.cozy-tile y .tile) para compatibilidad.
    ========================================================================== */
-.cozy-tile {
+.cozy-tile,
+.tile {
   position: relative;
   width: 100%;
   height: 100%;
@@ -1029,6 +1032,32 @@ a:focus-visible {
   background-color: #edd9c4;
   box-shadow: inset 0 0 0 1px #cfb59d;
 }
+
+/* ── Aliases para el nuevo Tile.jsx que usa "tile tile-{type}" ── */
+.tile-texture { position: absolute; inset: 0; pointer-events: none; opacity: 0.7; }
+
+.tile-floor    { background-color: #e5ccb3; box-shadow: inset 0 0 0 1px rgba(175,140,110,0.25); }
+.tile-floor .tile-texture {
+  background-image: repeating-linear-gradient(0deg,transparent,transparent 12px,rgba(140,95,59,.15) 13px,transparent 14px);
+}
+.tile-wall     { background-color: #8c5f3b; box-shadow: inset 0 3px 0 #5e3b20, inset 0 -2px 0 #3d2310; }
+.tile-wall .tile-texture {
+  background-image: repeating-linear-gradient(90deg,transparent,transparent 10px,rgba(42,32,51,.3) 11px,transparent 12px);
+}
+.tile-carpet   { background-color: var(--color-peach); box-shadow: inset 0 0 0 1px #e39371; }
+.tile-carpet .tile-texture { background-image: radial-gradient(#fba67f 1px,transparent 1px); background-size: 6px 6px; }
+.tile-roof     { background-color: #d18d80; box-shadow: inset 0 -2px 0 #ab675a; }
+.tile-roof .tile-texture {
+  background-image: repeating-linear-gradient(45deg,transparent,transparent 6px,rgba(171,103,90,.4) 7px,transparent 8px);
+}
+.tile-garden   { background-color: #a3c9b1; box-shadow: inset 0 0 0 1px #8cb39a; }
+.tile-garden .tile-texture { background-image: radial-gradient(#7aa68a 1.5px,transparent 1.5px); background-size: 8px 8px; }
+.tile-water    { background-color: #8faec5; box-shadow: inset 0 0 8px rgba(42,32,51,.3); }
+.tile-water .tile-texture { background: linear-gradient(to bottom,#d6c0f8,#fbc6b0); opacity: .85; }
+.tile-door     { background-color: #c49a70; box-shadow: inset 0 0 0 2px var(--color-wood-dark); }
+.tile-exit     { background-color: var(--color-mint); box-shadow: inset 0 0 0 2px var(--color-mint-dark); animation: exitGlow 2s infinite alternate; }
+.tile-blocked  { background-color: #a08c99; box-shadow: inset 0 2px 0 #7b6874; }
+.tile-interior { background-color: #edd9c4; box-shadow: inset 0 0 0 1px #cfb59d; }
 
 /* ==========================================================================
    MapObject.jsx
@@ -1503,4 +1532,1420 @@ a:focus-visible {
   .room-item--plant {
     display: none;
   }
+}
+
+/* ==========================================================================
+   PixelMishi.jsx – Gata protagonista construida 100% con CSS
+   Paleta: crema, rosa pastel, marrón suave, lavanda.
+   ========================================================================== */
+.pixel-mishi {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+
+/* Tamaños */
+.pixel-mishi--small  { width: 24px; height: 28px; transform: scale(0.7); transform-origin: bottom center; }
+.pixel-mishi--medium { width: 36px; height: 40px; }
+.pixel-mishi--large  { width: 52px; height: 58px; transform: scale(1.4); transform-origin: bottom center; }
+
+/* Sombra en el suelo */
+.pm-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 5px;
+  background: rgba(42,32,51,0.18);
+  border-radius: 50%;
+}
+
+/* Cola */
+.pm-tail {
+  position: absolute;
+  bottom: 4px;
+  right: -5px;
+  width: 10px;
+  height: 14px;
+  background: #e3c9a8;
+  border: 2px solid #2a2033;
+  border-radius: 0 50% 50% 0;
+  transform: rotate(20deg);
+}
+.pixel-mishi--left  .pm-tail { right: auto; left: -5px; transform: rotate(-20deg); border-radius: 50% 0 0 50%; }
+.pixel-mishi--up    .pm-tail { bottom: 2px; right: -4px; transform: rotate(40deg); }
+
+/* Cuerpo */
+.pm-body {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 18px;
+  background: #f5ebe0;
+  border: 2px solid #2a2033;
+  border-radius: 4px 4px 6px 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding-bottom: 0;
+}
+
+/* Patitas */
+.pm-paw {
+  width: 7px;
+  height: 6px;
+  background: #ffd3dc;
+  border: 2px solid #2a2033;
+  border-radius: 2px 2px 4px 4px;
+  position: relative;
+  bottom: -2px;
+}
+
+/* Cabeza */
+.pm-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 24px;
+  background: #f5ebe0;
+  border: 2px solid #2a2033;
+  border-radius: 6px 6px 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Orejas */
+.pm-ear {
+  position: absolute;
+  top: -9px;
+  width: 10px;
+  height: 10px;
+  background: #f5ebe0;
+  border: 2px solid #2a2033;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.pm-ear--left  { left: 1px; }
+.pm-ear--right { right: 1px; }
+.pm-ear__inner {
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: #ffd3dc;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Moño */
+.pm-ribbon {
+  position: absolute;
+  top: -12px;
+  right: -2px;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+.pm-ribbon__knot {
+  width: 5px;
+  height: 5px;
+  background: #f89fb3;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+  z-index: 2;
+}
+.pm-ribbon__loop {
+  width: 7px;
+  height: 5px;
+  background: #ffd3dc;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.pm-ribbon__loop--l { transform: rotate(-15deg); }
+.pm-ribbon__loop--r { transform: rotate(15deg); }
+
+/* Cara */
+.pm-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+  width: 100%;
+}
+
+/* Ojos */
+.pm-eyes {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+.pm-eye {
+  position: relative;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #cdbaf3;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.pm-eye__pupil {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 4px;
+  height: 4px;
+  background: #2a2033;
+  border-radius: 50%;
+}
+.pm-eye__shine {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* Nariz */
+.pm-nose {
+  width: 5px;
+  height: 3px;
+  background: #f89fb3;
+  border: 1px solid #2a2033;
+  border-radius: 2px 2px 3px 3px;
+}
+
+/* Bigotes */
+.pm-whiskers {
+  position: absolute;
+  bottom: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pm-whiskers span {
+  display: block;
+  width: 10px;
+  height: 1px;
+  background: #8c5f3b;
+  border-radius: 1px;
+}
+.pm-whiskers--left  { left: -12px; align-items: flex-start; }
+.pm-whiskers--right { right: -12px; align-items: flex-end; }
+.pm-whiskers--left  span { transform-origin: right center; transform: rotate(-5deg); }
+.pm-whiskers--right span { transform-origin: left center;  transform: rotate(5deg); }
+
+/* Animación de paso */
+@keyframes mishiWalk {
+  0%   { transform: translateX(-50%) translateY(0); }
+  50%  { transform: translateX(-50%) translateY(-2px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+.pixel-mishi--moving .pm-body {
+  animation: mishiWalk 0.3s ease-in-out;
+}
+
+/* ==========================================================================
+   PixelYosu.jsx – Gato azul grisáceo con collar dorado
+   ========================================================================== */
+.pixel-yosu {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+.pixel-yosu--small  { width: 24px; height: 28px; transform: scale(0.7); transform-origin: bottom center; }
+.pixel-yosu--medium { width: 36px; height: 40px; }
+.pixel-yosu--large  { width: 52px; height: 58px; transform: scale(1.4); transform-origin: bottom center; }
+
+/* Sombra */
+.py-shadow {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 5px;
+  background: rgba(42,32,51,0.18);
+  border-radius: 50%;
+}
+
+/* Cola */
+.py-tail {
+  position: absolute;
+  bottom: 4px;
+  right: -6px;
+  width: 11px;
+  height: 15px;
+  background: #b2c5d4;
+  border: 2px solid #2a2033;
+  border-radius: 0 50% 50% 0;
+  transform: rotate(15deg);
+}
+
+/* Cuerpo */
+.py-body {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 18px;
+  background: #b2c5d4;
+  border: 2px solid #2a2033;
+  border-radius: 4px 4px 6px 6px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  padding-bottom: 0;
+}
+.py-chest {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 10px;
+  background: #f5ebe0;
+  border-radius: 4px;
+}
+.py-paw {
+  width: 7px;
+  height: 6px;
+  background: #f5ebe0;
+  border: 2px solid #2a2033;
+  border-radius: 2px 2px 4px 4px;
+  position: relative;
+  bottom: -2px;
+}
+
+/* Collar */
+.py-collar {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+}
+.py-collar__band {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: #f5cb42;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+}
+.py-collar__bell {
+  position: absolute;
+  bottom: -4px;
+  width: 6px;
+  height: 6px;
+  background: #ffe699;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+
+/* Cabeza */
+.py-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 24px;
+  background: #b2c5d4;
+  border: 2px solid #2a2033;
+  border-radius: 6px 6px 4px 4px;
+}
+.py-ear {
+  position: absolute;
+  top: -9px;
+  width: 10px;
+  height: 10px;
+  background: #b2c5d4;
+  border: 2px solid #2a2033;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.py-ear--left  { left: 1px; }
+.py-ear--right { right: 1px; }
+.py-ear__inner {
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  background: #e5d7fa;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Cara de Yosu */
+.py-face {
+  position: absolute;
+  top: 4px;
+  left: 0; right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.py-eyes { display: flex; gap: 6px; }
+.py-eye {
+  position: relative;
+  width: 7px; height: 7px;
+  background: #7a9bb6;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.py-eye__pupil {
+  position: absolute;
+  top: 1px; left: 1px;
+  width: 4px; height: 4px;
+  background: #2a2033;
+  border-radius: 50%;
+}
+.py-eye__shine {
+  position: absolute;
+  top: 1px; right: 1px;
+  width: 2px; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+}
+.py-nose {
+  width: 5px; height: 3px;
+  background: #cdbaf3;
+  border: 1px solid #2a2033;
+  border-radius: 2px 2px 3px 3px;
+}
+.py-whiskers {
+  position: absolute;
+  bottom: 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.py-whiskers span { display: block; width: 10px; height: 1px; background: #7a9bb6; border-radius: 1px; }
+.py-whiskers--left  { left: -12px; }
+.py-whiskers--right { right: -12px; }
+
+/* Humor feliz */
+.pixel-yosu--happy .py-eye { background: #ffe699; }
+
+/* ==========================================================================
+   PixelObject.jsx – Muebles y objetos del mundo
+   ========================================================================== */
+.pixel-object {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.pixel-object__graphic {
+  width: 85%;
+  height: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Indicador de interactividad */
+.pixel-object__indicator {
+  position: absolute;
+  top: 1px; right: 1px;
+  z-index: 10;
+}
+.po-indicator-dot {
+  display: block;
+  width: 5px; height: 5px;
+  background: #f5cb42;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+  animation: dotPulse 1.2s infinite alternate;
+}
+@keyframes dotPulse {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* Estados */
+.is-interactive { cursor: pointer; filter: drop-shadow(0 0 3px #f5cb42); }
+.is-collected   { opacity: 0.4; filter: grayscale(0.7); }
+
+/* ─── Cama ─── */
+.po-bed { display: flex; flex-direction: column; align-items: center; gap: 1px; width: 100%; }
+.po-bed__headboard {
+  width: 90%; height: 8px;
+  background: #8c5f3b;
+  border: 2px solid #2a2033;
+  border-radius: 2px 2px 0 0;
+}
+.po-bed__mattress {
+  width: 100%; height: 14px;
+  background: #ffd3dc;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 2px;
+}
+.po-bed__pillow {
+  width: 12px; height: 10px;
+  background: #fffdf9;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+}
+.po-bed__quilt {
+  flex: 1; height: 10px;
+  background: #ffd1b3;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(90deg,transparent,transparent 5px,rgba(42,32,51,.1) 6px);
+}
+
+/* ─── Estante ─── */
+.po-shelf { width: 100%; display: flex; flex-direction: column; gap: 2px; }
+.po-shelf__wood {
+  width: 100%; height: 5px;
+  background: #8c5f3b;
+  border: 1.5px solid #2a2033;
+}
+.po-shelf__books {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  padding: 0 2px;
+}
+.book {
+  display: block;
+  width: 6px;
+  border: 1.5px solid #2a2033;
+  border-radius: 1px;
+}
+.book--1 { height: 14px; background: #ffd3dc; }
+.book--2 { height: 18px; background: #cbead6; }
+.book--3 { height: 12px; background: #e5d7fa; }
+
+/* ─── Foto ─── */
+.po-photo { display: flex; justify-content: center; }
+.po-photo__frame {
+  width: 26px; height: 22px;
+  background: #e3c9a8;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+  padding: 2px;
+}
+.po-photo__canvas {
+  width: 100%; height: 100%;
+  background: #f5ebe0;
+  border: 1px solid #8c5f3b;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+}
+.mini-cat-silhouette {
+  display: block;
+  width: 7px; height: 9px;
+  border-radius: 50% 50% 30% 30%;
+  border: 1.5px solid #2a2033;
+}
+.cat--mishi { background: #f5ebe0; }
+.cat--yosu  { background: #b2c5d4; }
+
+/* ─── Juguete (ovillo) ─── */
+.po-toy { display: flex; justify-content: center; align-items: center; }
+.po-yarn-ball {
+  position: relative;
+  width: 20px; height: 20px;
+  background: #fba67f;
+  border: 2px solid #2a2033;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.yarn-line {
+  position: absolute;
+  background: rgba(42,32,51,0.25);
+  border-radius: 2px;
+}
+.yarn-line--1 { width: 100%; height: 2px; top: 6px; transform: rotate(30deg); }
+.yarn-line--2 { width: 100%; height: 2px; top: 12px; transform: rotate(-30deg); }
+.yarn-tail {
+  position: absolute;
+  top: -4px; right: -2px;
+  width: 3px; height: 8px;
+  background: #fba67f;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+  transform: rotate(20deg);
+}
+
+/* ─── Manta ─── */
+.po-blanket {
+  width: 100%;
+  height: 18px;
+  background: #e5d7fa;
+  border: 2px solid #2a2033;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+.po-blanket__folds { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-around; }
+.po-blanket__folds span { display: block; height: 2px; background: rgba(42,32,51,0.15); margin: 0 3px; border-radius: 1px; }
+
+/* ─── Cajón ─── */
+.po-drawer { display: flex; justify-content: center; }
+.po-drawer__body {
+  width: 28px; height: 22px;
+  background: #e3c9a8;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.po-drawer__knob {
+  width: 6px; height: 6px;
+  background: #f5cb42;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.po-drawer__keyhole {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  background: #2a2033;
+  border-radius: 50%;
+}
+
+/* ─── Ventana ─── */
+.po-window { display: flex; justify-content: center; }
+.po-window__frame {
+  position: relative;
+  width: 26px; height: 26px;
+  background: #b2d8f8;
+  border: 2.5px solid #2a2033;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.po-window__glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,rgba(255,255,255,0.6) 30%,transparent 70%);
+}
+.sun-glow {
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 8px; height: 8px;
+  background: #ffe699;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+.po-window__cross-v {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 2px;
+  background: #2a2033;
+}
+.po-window__cross-h {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%; transform: translateY(-50%);
+  height: 2px;
+  background: #2a2033;
+}
+
+/* ─── Planta ─── */
+.po-plant { display: flex; flex-direction: column; align-items: center; }
+.po-plant__leaves {
+  display: flex;
+  gap: 2px;
+  align-items: flex-end;
+  margin-bottom: 1px;
+}
+.leaf-sprout {
+  display: block;
+  width: 8px; height: 12px;
+  background: #8ecaa1;
+  border: 1.5px solid #2a2033;
+  border-radius: 50% 50% 30% 30%;
+}
+.leaf--c { height: 16px; background: #cbead6; }
+.po-plant__pot {
+  width: 16px; height: 10px;
+  background: #fba67f;
+  border: 2px solid #2a2033;
+  border-radius: 1px 1px 4px 4px;
+}
+
+/* ─── Mesa ─── */
+.po-table { display: flex; flex-direction: column; align-items: center; }
+.po-table__top {
+  width: 100%; height: 7px;
+  background: #e3c9a8;
+  border: 2px solid #2a2033;
+  border-radius: 2px 2px 0 0;
+}
+.po-table__legs {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+}
+.table-leg {
+  display: block;
+  width: 4px; height: 10px;
+  background: #be9b7b;
+  border: 1.5px solid #2a2033;
+}
+
+/* ─── Chimenea ─── */
+.po-chimney { display: flex; flex-direction: column; align-items: center; }
+.po-chimney__smoke {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 1px;
+}
+.smoke-puff {
+  display: block;
+  background: rgba(200,200,200,0.7);
+  border-radius: 50%;
+  animation: smokeRise 2s infinite ease-in-out;
+}
+.smoke-puff--1 { width: 7px; height: 7px; animation-delay: 0s; }
+.smoke-puff--2 { width: 5px; height: 5px; animation-delay: 0.6s; }
+@keyframes smokeRise {
+  0%   { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-8px) scale(1.3); opacity: 0; }
+}
+.po-chimney__cap {
+  width: 18px; height: 4px;
+  background: #8c5f3b;
+  border: 2px solid #2a2033;
+}
+.po-chimney__brick {
+  width: 14px; height: 18px;
+  background: #c4826a;
+  border: 2px solid #2a2033;
+  background-image:
+    repeating-linear-gradient(0deg,transparent,transparent 5px,rgba(42,32,51,.2) 6px),
+    repeating-linear-gradient(90deg,transparent,transparent 4px,rgba(42,32,51,.1) 5px);
+}
+
+/* ─── Antena ─── */
+.po-antenna { display: flex; flex-direction: column; align-items: center; }
+.po-antenna__tip {
+  width: 4px; height: 4px;
+  background: #f5cb42;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.po-antenna__v-mast {
+  width: 3px; height: 18px;
+  background: #7a9bb6;
+  border: 1.5px solid #2a2033;
+}
+.po-antenna__arms {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.arm {
+  display: block;
+  height: 3px;
+  background: #7a9bb6;
+  border: 1.5px solid #2a2033;
+}
+.arm--left  { width: 12px; transform: rotate(-15deg); }
+.arm--right { width: 12px; transform: rotate(15deg); }
+
+/* ─── Caja ─── */
+.po-box { display: flex; justify-content: center; align-items: center; }
+.po-box__crate {
+  position: relative;
+  width: 24px; height: 20px;
+  background: #e3c9a8;
+  border: 2.5px solid #2a2033;
+  border-radius: 2px;
+}
+.crate-plank {
+  display: block;
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 2px;
+  background: rgba(42,32,51,0.3);
+  transform: translateY(-50%);
+}
+.crate-cross {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom right,transparent 45%,rgba(42,32,51,0.2) 46%,rgba(42,32,51,0.2) 54%,transparent 55%),
+    linear-gradient(to bottom left,transparent 45%,rgba(42,32,51,0.2) 46%,rgba(42,32,51,0.2) 54%,transparent 55%);
+}
+
+/* ─── Maceta con flor ─── */
+.po-pot { display: flex; flex-direction: column; align-items: center; }
+.po-pot__flower {
+  position: relative;
+  width: 18px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.petal {
+  position: absolute;
+  width: 7px; height: 7px;
+  background: #ffd3dc;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.petal--1 { top: 0; left: 2px; }
+.petal--2 { top: 0; right: 2px; }
+.flower-center {
+  position: absolute;
+  bottom: 0;
+  width: 8px; height: 8px;
+  background: #ffe699;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+  z-index: 1;
+}
+.po-pot__body {
+  width: 16px; height: 10px;
+  background: #fba67f;
+  border: 2px solid #2a2033;
+  border-radius: 1px 1px 4px 4px;
+}
+
+/* ─── Cuerda ─── */
+.po-rope { display: flex; justify-content: center; align-items: center; }
+.po-rope__coil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.rope-loop {
+  display: block;
+  width: 20px; height: 5px;
+  background: #e3c9a8;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.rope-end {
+  display: block;
+  width: 4px; height: 8px;
+  background: #e3c9a8;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+}
+
+/* ─── Gancho ─── */
+.po-hook { display: flex; justify-content: center; align-items: center; }
+.po-hook__metal { position: relative; width: 14px; height: 20px; }
+.hook-ring {
+  display: block;
+  width: 10px; height: 8px;
+  border: 2.5px solid #7a9bb6;
+  border-radius: 50%;
+  position: absolute;
+  top: 0; left: 2px;
+}
+.hook-curve {
+  display: block;
+  width: 10px; height: 12px;
+  border: 2.5px solid #7a9bb6;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  position: absolute;
+  bottom: 0; left: 2px;
+}
+
+/* ─── Madera ─── */
+.po-wood { display: flex; justify-content: center; align-items: center; }
+.po-wood__plank {
+  position: relative;
+  width: 30px; height: 10px;
+  background: #be9b7b;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.wood-knot {
+  position: absolute;
+  left: 8px; top: 2px;
+  width: 6px; height: 6px;
+  background: #8c5f3b;
+  border-radius: 50%;
+  border: 1px solid #2a2033;
+}
+.wood-strip {
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 2px;
+  background: rgba(42,32,51,0.15);
+  transform: translateY(-50%);
+}
+
+/* ─── Puente ─── */
+.po-bridge { display: flex; justify-content: center; align-items: center; }
+.po-bridge__planks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+}
+.b-plank {
+  display: block;
+  height: 6px;
+  background: #be9b7b;
+  border: 1.5px solid #2a2033;
+  border-radius: 1px;
+  width: 100%;
+}
+.b-rope {
+  display: block;
+  height: 2px;
+  background: #e3c9a8;
+  border: 1px solid #2a2033;
+  width: 100%;
+}
+
+/* ─── Puerta ─── */
+.po-door { display: flex; justify-content: center; align-items: flex-end; }
+.po-door__frame {
+  position: relative;
+  width: 22px; height: 30px;
+  background: #c49a70;
+  border: 2.5px solid #2a2033;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+}
+.po-door__handle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px; height: 4px;
+  background: #f5cb42;
+  border: 1px solid #2a2033;
+  border-radius: 50%;
+}
+.po-door__panels {
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.po-door__panels span {
+  display: block;
+  flex: 1;
+  background: #b3895c;
+  border: 1px solid #2a2033;
+  border-radius: 1px;
+}
+
+/* ─── Huella de gato ─── */
+.po-pawprint { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.po-pawprint__toes {
+  display: flex;
+  gap: 3px;
+}
+.po-pawprint__toes span {
+  display: block;
+  width: 6px; height: 6px;
+  background: #ffd3dc;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+.po-pawprint__pad {
+  width: 14px; height: 10px;
+  background: #ffd3dc;
+  border: 1.5px solid #2a2033;
+  border-radius: 50%;
+}
+
+/* ─── Herramienta ─── */
+.po-tool { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.po-tool__head {
+  width: 14px; height: 8px;
+  background: #7a9bb6;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+}
+.po-tool__handle {
+  width: 5px; height: 16px;
+  background: #be9b7b;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+}
+
+/* ─── Pelota ─── */
+.po-ball { display: flex; justify-content: center; align-items: center; }
+.po-ball__sphere {
+  position: relative;
+  width: 20px; height: 20px;
+  background: radial-gradient(circle at 35% 35%, #ffd3dc, #f89fb3);
+  border: 2px solid #2a2033;
+  border-radius: 50%;
+}
+.ball-shine {
+  position: absolute;
+  top: 3px; left: 4px;
+  width: 5px; height: 4px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+}
+
+/* ─── Collar ─── */
+.po-collar { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.po-collar__strap {
+  position: relative;
+  width: 24px; height: 6px;
+  background: #f5cb42;
+  border: 2px solid #2a2033;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.po-collar__bell {
+  position: absolute;
+  bottom: -7px;
+  width: 8px; height: 8px;
+  background: #ffe699;
+  border: 2px solid #2a2033;
+  border-radius: 50%;
+}
+
+/* ─── Lámpara ─── */
+.po-lamp { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.po-lamp__glow {
+  width: 20px; height: 8px;
+  background: rgba(255,230,153,0.5);
+  border-radius: 50%;
+  animation: lampGlow 2s infinite alternate;
+}
+@keyframes lampGlow {
+  0%   { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1;   transform: scale(1.1); }
+}
+.po-lamp__roof {
+  width: 20px; height: 7px;
+  background: #ffd3dc;
+  border: 2px solid #2a2033;
+  clip-path: polygon(0% 100%, 10% 0%, 90% 0%, 100% 100%);
+}
+.po-lamp__glass {
+  width: 14px; height: 14px;
+  background: rgba(255,230,153,0.7);
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+}
+.po-lamp__post {
+  width: 4px; height: 12px;
+  background: #8c5f3b;
+  border: 1.5px solid #2a2033;
+}
+
+/* ─── Objeto genérico ─── */
+.po-generic-crate {
+  width: 20px; height: 18px;
+  background: #e3c9a8;
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   PixelDecoration.jsx – Decoraciones pixel art ambientales
+   ========================================================================== */
+.pixel-decoration {
+  display: inline-block;
+  image-rendering: pixelated;
+}
+
+/* Estrella de 4 puntas */
+.deco-pixel-star {
+  position: relative;
+  width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.star-point {
+  position: absolute;
+  background: #f5cb42;
+  border-radius: 1px;
+}
+.star-point--v { width: 4px; height: 14px; }
+.star-point--h { width: 14px; height: 4px; }
+.star-center {
+  position: absolute;
+  width: 5px; height: 5px;
+  background: #ffe699;
+  border: 1px solid #2a2033;
+  border-radius: 1px;
+  z-index: 1;
+}
+
+/* Huella de gato */
+.deco-pixel-paw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.paw-toes { display: flex; gap: 2px; }
+.paw-toe {
+  display: block;
+  width: 5px; height: 5px;
+  background: #ffd3dc;
+  border: 1px solid #2a2033;
+  border-radius: 50%;
+}
+.paw-pad {
+  width: 10px; height: 8px;
+  background: #ffd3dc;
+  border: 1px solid #2a2033;
+  border-radius: 50%;
+}
+
+/* Hojita */
+.deco-pixel-leaf {
+  position: relative;
+  width: 12px; height: 18px;
+  display: flex; flex-direction: column; align-items: center;
+}
+.leaf-stem {
+  display: block;
+  width: 2px; height: 6px;
+  background: #8c5f3b;
+  border-radius: 1px;
+  margin-top: auto;
+}
+.leaf-body {
+  display: block;
+  width: 10px; height: 14px;
+  background: #8ecaa1;
+  border: 1.5px solid #2a2033;
+  border-radius: 50% 50% 30% 30%;
+}
+
+/* Nube */
+.deco-pixel-cloud {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+.cloud-puff {
+  display: block;
+  background: #fffdf9;
+  border: 1.5px solid #b2c5d4;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+}
+.cloud-puff--1 { width: 12px; height: 12px; left: 0; }
+.cloud-puff--2 { width: 16px; height: 16px; left: 8px; bottom: 2px; }
+.cloud-puff--3 { width: 10px; height: 10px; left: 20px; }
+.cloud-base {
+  display: block;
+  width: 32px; height: 8px;
+  background: #fffdf9;
+  border: 1.5px solid #b2c5d4;
+  border-radius: 2px;
+  margin-top: 14px;
+}
+
+/* Destello */
+.deco-pixel-sparkle {
+  position: relative;
+  width: 14px; height: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sparkle-diamond {
+  display: block;
+  width: 8px; height: 8px;
+  background: #e5d7fa;
+  border: 1.5px solid #2a2033;
+  transform: rotate(45deg);
+  box-shadow: 0 0 4px #cdbaf3;
+  animation: sparkleAnim 1.5s infinite alternate;
+}
+@keyframes sparkleAnim {
+  0%   { transform: rotate(45deg) scale(1);   opacity: 1; }
+  100% { transform: rotate(45deg) scale(1.3); opacity: 0.6; }
+}
+
+/* Veta de madera */
+.deco-pixel-wood { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.wood-line {
+  display: block;
+  position: absolute;
+  top: 40%; left: 0; right: 0;
+  height: 2px;
+  background: rgba(140,95,59,0.3);
+  border-radius: 2px;
+}
+
+/* Patrones de tile */
+.deco-pixel-tile-pattern {
+  width: 100%; height: 100%;
+  background-image:
+    linear-gradient(rgba(42,32,51,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,32,51,0.07) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+.deco-pixel-shingle {
+  width: 100%; height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(171,103,90,0.3),
+    rgba(171,103,90,0.3) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* ==========================================================================
+   MobileControls.jsx – D-Pad táctil pixel art
+   ========================================================================== */
+.mobile-dpad-container {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+.mobile-dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+.mobile-dpad__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Botón de dirección base */
+.dpad-btn {
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-parchment);
+  border: var(--border-pixel);
+  box-shadow: var(--shadow-pixel-small);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.1s ease, transform 0.08s ease;
+  position: relative;
+  overflow: hidden;
+}
+.dpad-btn:hover   { background-color: var(--color-peach); }
+.dpad-btn:active  { transform: translate(1px, 1px); box-shadow: none; }
+.dpad-btn:focus-visible { outline: 3px solid #f89fb3; outline-offset: 2px; }
+
+/* Centro decorativo */
+.dpad-btn--center {
+  width: 48px; height: 48px;
+  background-color: var(--color-cream);
+  border: var(--border-pixel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dpad-center-core {
+  display: block;
+  width: 14px; height: 14px;
+  background: var(--color-wood-light);
+  border: 2px solid #2a2033;
+  border-radius: 2px;
+  transform: rotate(45deg);
+}
+
+/* Flechas CSS puras (triángulos con border-trick) */
+.control-arrow {
+  display: block;
+  width: 0;
+  height: 0;
+}
+.control-arrow-up    { border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 14px solid #2a2033; }
+.control-arrow-down  { border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 14px solid #2a2033; }
+.control-arrow-left  { border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-right: 14px solid #2a2033; }
+.control-arrow-right { border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 14px solid #2a2033; }
+
+/* ==========================================================================
+   Game.jsx – Elementos específicos de pantalla de juego
+   ========================================================================== */
+
+/* Toast de movimiento bloqueado */
+.blocked-toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-night-card);
+  color: var(--color-cream-light);
+  padding: 10px 20px;
+  border: 2px solid var(--color-wood-mid);
+  box-shadow: var(--shadow-pixel);
+  font-family: var(--font-retro);
+  font-size: 0.9rem;
+  z-index: 100;
+  pointer-events: none;
+  animation: toastFadeIn 0.2s ease;
+}
+@keyframes toastFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+.blocked-toast__text { display: block; }
+
+/* Sección de controles en pantalla */
+.game-controls-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0;
+}
+.controls-heading {
+  font-family: var(--font-retro);
+  font-size: 0.85rem;
+  color: var(--color-wood-dark);
+}
+
+/* Casilla donde se pinta Mishi en el mapa */
+.mishi-tile-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   MapLegend.jsx – Leyenda del mapa con swatches CSS
+   ========================================================================== */
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 10px 16px;
+  background-color: var(--color-cream-light);
+  border: var(--border-pixel);
+  box-shadow: var(--shadow-pixel-small);
+  margin-top: 12px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-retro);
+  font-size: 0.8rem;
+  color: var(--color-night-soft);
+}
+.legend-swatch {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.legend-swatch--floor   { background-color: #e5ccb3; }
+.legend-swatch--wall    { background-color: #8c5f3b; }
+.legend-swatch--object  { background-color: #ffd3dc; }
+.legend-swatch--exit    { background-color: var(--color-mint); }
+.legend-swatch--mishi   { background-color: #cdbaf3; border-color: #f89fb3; }
+
+/* ==========================================================================
+   DialogueBox.jsx – Retrato de personaje
+   ========================================================================== */
+.dialogue-portrait-box {
+  width: 70px; height: 70px;
+  background-color: var(--color-parchment);
+  border: var(--border-pixel);
+  box-shadow: var(--shadow-pixel-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Completion.jsx – Pantalla de reencuentro
+   ========================================================================== */
+.completion-decor-stars {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.cats-reunion-bond {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+.bond-line {
+  width: 60px; height: 4px;
+  background: linear-gradient(to right, #ffd3dc, #e5d7fa);
+  border: 1.5px solid #2a2033;
+  border-radius: 2px;
+  animation: bondPulse 2s infinite alternate;
+}
+@keyframes bondPulse {
+  0%   { opacity: 0.6; transform: scaleX(0.9); }
+  100% { opacity: 1;   transform: scaleX(1.05); }
+}
+
+/* ==========================================================================
+   Instructions.jsx – Números de sección
+   ========================================================================== */
+.guide-section__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background-color: var(--color-yellow-warm);
+  border: var(--border-pixel);
+  box-shadow: var(--shadow-pixel-small);
+  font-family: var(--font-retro);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-night-soft);
+  border-radius: 4px;
+  flex-shrink: 0;
 }

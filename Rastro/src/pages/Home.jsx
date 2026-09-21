@@ -2,19 +2,20 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import DialogueBox from "../components/DialogueBox";
 import CozyButton from "../components/CozyButton";
-import CharacterPortrait from "../components/CharacterPortrait";
+import PixelMishi from "../components/PixelMishi";
+import PixelObject from "../components/PixelObject";
+import PixelDecoration from "../components/PixelDecoration";
 import { initialStory } from "../data/storyData";
 
 /**
  * pages/Home.jsx
  * 
  * Pantalla principal del videojuego "Rastro de Bigotes".
- * Presenta la portada del RPG cozy con:
- * - Ilustración completa con HTML/CSS de la habitación de Mishi (ventana, cama, planta, foto de Yosu).
- * - Ilustración temporal hecha con CSS de Mishi.
- * - Título, subtítulo y botones "Comenzar historia" y "Cómo jugar".
- * - Secuencia de diálogos mediante DialogueBox que avanza por los 6 pensamientos de Mishi.
- * - Botón final "Entrar a la casa de Mishi" que redirige a /jugar/casa-mishi mediante useNavigate.
+ * Completamente libre de emojis; ilustra la habitación de Mishi con CSS puro:
+ * - Ventana iluminada, cama, planta, estante, foto enmarcada de Mishi y Yosu.
+ * - Mishi dibujada con PixelMishi (CSS puro).
+ * - Secuencia de diálogos mediante DialogueBox.
+ * - Botón "Entrar a la casa de Mishi" que redirige a /jugar/casa-mishi mediante useNavigate.
  */
 export default function Home() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function Home() {
         {/* Cabecera de la Portada */}
         <div className="title-screen__header">
           <div className="title-screen__badge" aria-hidden="true">
-            🐾 RPG 2D Cozy de Puzzles
+            RPG 2D Cozy de Puzzles
           </div>
           <h1 className="title-screen__game-name">Rastro de Bigotes</h1>
           <p className="title-screen__subtitle">
@@ -54,63 +55,48 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Ilustración de la Casa de Mishi hecha puramente con HTML y CSS */}
+        {/* Ilustración de la Casa de Mishi hecha 100% con HTML y CSS */}
         <div
           className="cozy-room-illustration"
           role="region"
-          aria-label="Ilustración de la casa de Mishi con ventana cálida, cama, plantas y recuerdos"
+          aria-label="Ilustración pixel art de la casa de Mishi con ventana cálida, cama, plantas y recuerdos"
         >
-          {/* Luz dorada y ventana */}
+          {/* Ventana con luz cálida (PixelObject) */}
           <div className="room-item room-item--window" title="Ventana con luz del atardecer">
-            <div className="window-frame">
-              <div className="window-sky">
-                <span className="window-sun" />
-                <span className="window-cloud">☁️</span>
-              </div>
-              <div className="window-sill" />
-            </div>
-            <div className="window-sunbeam" />
+            <PixelObject type="window" name="Ventana al atardecer" />
+            <div className="window-sunbeam" aria-hidden="true" />
           </div>
 
-          {/* Fotografía / Recuerdo de Yosu en la pared */}
+          {/* Fotografía / Recuerdo de Yosu en la pared (PixelObject) */}
           <div className="room-item room-item--frame" title="Fotografía de Mishi y Yosu">
-            <div className="wall-frame">
-              <span className="frame-art">🖼️</span>
-              <span className="frame-caption">Yosu &amp; Mishi</span>
-            </div>
+            <PixelObject type="photo" name="Fotografía de Mishi y Yosu" />
+            <span className="frame-caption">Yosu y Mishi</span>
           </div>
 
-          {/* Planta decorativa */}
-          <div className="room-item room-item--plant" title="Planta en maceta menta">
-            <div className="pixel-plant">
-              <span className="plant-leaves">🪴</span>
-            </div>
+          {/* Planta decorativa (PixelObject) */}
+          <div className="room-item room-item--plant" title="Planta en maceta">
+            <PixelObject type="plant" name="Planta de interior" />
           </div>
 
-          {/* Cama suave de Mishi */}
+          {/* Cama suave de Mishi (PixelObject) */}
           <div className="room-item room-item--bed" title="Cama cálida de Mishi">
-            <div className="pixel-bed">
-              <span className="bed-blanket" />
-              <span className="bed-pillow">🛏️</span>
-            </div>
+            <PixelObject type="bed" name="Cama suave" />
           </div>
 
-          {/* Ilustración temporal de Mishi hecha con CSS puro */}
-          <div className="room-item room-item--mishi" title="Mishi mirando hacia la ventana">
-            <CharacterPortrait character="Mishi" expression="nostalgic" size="large" />
-            <div className="mishi-ground-shadow" />
+          {/* Ilustración pixel art de Mishi hecha en CSS */}
+          <div className="room-item room-item--mishi" title="Mishi en su habitación">
+            <PixelMishi direction="down" size="large" />
           </div>
 
-          {/* Detalles decorativos: Huellitas, corazones y estrellas */}
+          {/* Decoraciones pixeladas CSS (sin emojis) */}
           <div className="room-item room-item--decors" aria-hidden="true">
-            <span className="decor-item decor-heart">💖</span>
-            <span className="decor-item decor-paw">🐾</span>
-            <span className="decor-item decor-star">✨</span>
-            <span className="decor-item decor-yarn">🧶</span>
+            <PixelDecoration type="star" className="decor-star" />
+            <PixelDecoration type="pawprint" className="decor-paw" />
+            <PixelDecoration type="sparkle" className="decor-sparkle" />
           </div>
 
           {/* Suelo de madera */}
-          <div className="room-floor-base" />
+          <div className="room-floor-base" aria-hidden="true" />
         </div>
 
         {/* Sección de Acción / Narrativa */}
@@ -127,11 +113,11 @@ export default function Home() {
                 variant="hero"
                 ariaLabel="Comenzar la historia de Mishi y Yosu"
               >
-                ✨ Comenzar historia
+                Comenzar historia
               </CozyButton>
 
               <Link to="/instrucciones" className="cozy-btn cozy-btn--secondary">
-                📜 Cómo jugar
+                Cómo jugar
               </Link>
             </div>
           </div>
@@ -139,7 +125,7 @@ export default function Home() {
           /* Secuencia de Diálogos estilo RPG */
           <div className="title-screen__narrative-stage">
             <div className="narrative-progress-tag">
-              <span>💭 Recuerdos de Mishi ({currentDialogueIndex + 1} de {totalDialogues})</span>
+              <span>Recuerdos de Mishi ({currentDialogueIndex + 1} de {totalDialogues})</span>
             </div>
 
             <DialogueBox
@@ -159,7 +145,7 @@ export default function Home() {
                   ariaLabel="Entrar a la casa de Mishi y comenzar a jugar"
                   className="cozy-btn--enter-house"
                 >
-                  🐾 Entrar a la casa de Mishi
+                  Entrar a la casa de Mishi
                 </CozyButton>
               </div>
             )}

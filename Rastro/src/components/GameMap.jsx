@@ -1,33 +1,38 @@
 import React from "react";
 import Tile from "./Tile";
-import MapObject from "./MapObject";
+import PixelObject from "./PixelObject";
+import PixelMishi from "./PixelMishi";
+import PixelYosu from "./PixelYosu";
 
 /**
  * components/GameMap.jsx
  * 
- * Componente principal que renderiza el escenario 2D en vista superior:
- * - Recibe el objeto `map` (con `rows`, `cols`, `tiles`, `interactiveObjects`, `theme`).
- * - Recibe `mishiPosition` con las coordenadas `{ row, col }` actuales de Mishi.
- * - Utiliza CSS Grid dinámico mediante variables CSS (`--grid-rows`, `--grid-cols`).
- * - Utiliza `map()` de JavaScript para iterar las filas y columnas con keys únicas y estables.
- * - Posiciona a los objetos interactivos y a Mishi en sus casillas correspondientes.
+ * Cuadrícula visual del escenario 2D en vista superior:
+ * - Renderiza cada celda con `Tile.jsx` aplicando CSS Grid.
+ * - Renderiza los objetos del mapa mediante `PixelObject.jsx` (sin emojis).
+ * - Posiciona a Mishi en su casilla actual `{ row, col }` usando `PixelMishi.jsx`.
+ * - Si estamos en la Casa de Yosu en la zona final, renderiza a `PixelYosu.jsx`.
  * 
- * @param {Object} map Objeto con la metadata y matriz del mapa.
- * @param {Object} mishiPosition Coordenadas `{ row, col }` de Mishi.
+ * @param {Object} map Objeto con metadata, dimensiones, tiles y objetos del mapa
+ * @param {Object} mishiPosition Coordenadas { row, col } de Mishi
+ * @param {string} direction Dirección cardinal actual ('up', 'down', 'left', 'right')
+ * @param {boolean} isMoving Si Mishi está en movimiento
  */
 export default function GameMap({
   map,
   mishiPosition = { row: 0, col: 0 },
+  direction = "down",
+  isMoving = false,
 }) {
   if (!map || !map.tiles) {
     return <div className="game-map--empty">No hay datos de mapa para mostrar.</div>;
   }
 
-  const { rows, cols, tiles, interactiveObjects = [], theme = "mishi-house" } = map;
+  const { id: mapId, rows, cols, tiles, interactiveObjects = [], theme = "mishi-house" } = map;
 
   /**
-   * Helper para buscar si existe un objeto interactivo o decorativo
-   * en la coordenada (r, c) dada.
+   * Helper para encontrar si existe un objeto interactivo o decorativo
+   * en la coordenada especificada (r, c).
    */
   const findObjectAt = (r, c) => {
     return interactiveObjects.find((obj) => obj.row === r && obj.col === c);
@@ -35,7 +40,6 @@ export default function GameMap({
 
   return (
     <div className={`game-map-wrapper theme--${theme}`}>
-      {/* Marco de madera o piedra decorativo del mapa */}
       <div
         className="game-map-grid"
         style={{
@@ -43,13 +47,13 @@ export default function GameMap({
           "--grid-cols": cols,
         }}
         role="grid"
-        aria-label={`Mapa ${map.name} de ${rows} filas por ${cols} columnas`}
+        aria-label={`Cuadrícula del mapa ${map.name}, ${rows} filas por ${cols} columnas`}
       >
-        {/* Renderizado de casillas mediante map() */}
         {tiles.map((rowArray, r) =>
           rowArray.map((tileType, c) => {
             const isMishiHere = mishiPosition.row === r && mishiPosition.col === c;
             const objectHere = findObjectAt(r, c);
+            const isYosuSpot = mapId === "casa-yosu" && r === 2 && c === 10;
 
             return (
               <Tile
@@ -58,31 +62,28 @@ export default function GameMap({
                 row={r}
                 col={c}
               >
-                {/* Objeto en la casilla si existe */}
-                {objectHere && (
-                  <MapObject
-                    name={objectHere.name}
+                {/* Objeto de la casilla */}
+                {objectHere && !isYosuSpot && (
+                  <PixelObject
                     type={objectHere.type}
-                    row={objectHere.row}
-                    col={objectHere.col}
-                    isInteractive={objectHere.isInteractive}
-                    label={objectHere.label}
+                    name={objectHere.name}
+                    interactive={objectHere.isInteractive}
                   />
                 )}
 
-                {/* Representación visual temporal de Mishi */}
+                {/* Yosu en su rincón en la casa final */}
+                {isYosuSpot && (
+                  <PixelYosu size="small" mood="resting" />
+                )}
+
+                {/* Mishi ubicada en su casilla actual */}
                 {isMishiHere && (
-                  <div
-                    className="mishi-token"
-                    title={`Mishi en posición (${r + 1}, ${c + 1})`}
-                    role="img"
-                    aria-label="Mishi en la casilla"
-                  >
-                    <div className="mishi-token__shadow" />
-                    <div className="mishi-token__cat">
-                      <span className="cat-glyph">🐱</span>
-                      <span className="cat-ribbon">🎀</span>
-                    </div>
+                  <div className="mishi-tile-slot">
+                    <PixelMishi
+                      direction={direction}
+                      isMoving={isMoving}
+                      size="small"
+                    />
                   </div>
                 )}
               </Tile>
@@ -93,4 +94,3 @@ export default function GameMap({
     </div>
   );
 }
-

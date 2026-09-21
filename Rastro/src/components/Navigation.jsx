@@ -5,10 +5,10 @@ import { Link, useLocation } from "react-router-dom";
  * components/Navigation.jsx
  * 
  * Barra de navegación con enlaces de React Router DOM (`Link`).
- * Permite moverse fluidamente entre:
+ * Libre de emojis; utiliza tipografía y estilos CSS retro:
  * - Inicio (/)
- * - Instrucciones (/instrucciones)
- * - Comenzar juego (/jugar/casa-mishi)
+ * - Cómo jugar (/instrucciones)
+ * - Jugar (/jugar/casa-mishi)
  */
 export default function Navigation() {
   const location = useLocation();
@@ -25,7 +25,7 @@ export default function Navigation() {
         className={`rpg-nav-link ${isActive("/") ? "rpg-nav-link--active" : ""}`}
         aria-current={isActive("/") ? "page" : undefined}
       >
-        <span aria-hidden="true">🏠</span> Inicio
+        Inicio
       </Link>
 
       <Link
@@ -33,7 +33,7 @@ export default function Navigation() {
         className={`rpg-nav-link ${isActive("/instrucciones") ? "rpg-nav-link--active" : ""}`}
         aria-current={isActive("/instrucciones") ? "page" : undefined}
       >
-        <span aria-hidden="true">📜</span> Cómo jugar
+        Cómo jugar
       </Link>
 
       <Link
@@ -41,9 +41,8 @@ export default function Navigation() {
         className={`rpg-nav-link rpg-nav-link--play ${isActive("/jugar") ? "rpg-nav-link--active" : ""}`}
         aria-current={isActive("/jugar") ? "page" : undefined}
       >
-        <span aria-hidden="true">🐾</span> Jugar
+        Jugar
       </Link>
     </nav>
   );
 }
-

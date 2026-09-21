@@ -1,11 +1,12 @@
 import React from "react";
-import CharacterPortrait from "./CharacterPortrait";
+import PixelMishi from "./PixelMishi";
 import CozyButton from "./CozyButton";
 
 /**
  * components/DialogueBox.jsx
  * 
  * Cuadro de diálogo interactivo estilo RPG clásico de exploración.
+ * No contiene emojis.
  * 
  * Props obligatorias:
  * @param {string} characterName Nombre del personaje que habla (ej: "Mishi").
@@ -30,7 +31,9 @@ export default function DialogueBox({
       <div className="rpg-dialogue-box">
         {/* Retrato pixel art a la izquierda */}
         <div className="rpg-dialogue-box__portrait-col">
-          <CharacterPortrait character={characterName} expression={portrait} size="medium" />
+          <div className="dialogue-portrait-box">
+            <PixelMishi direction="down" size="medium" />
+          </div>
           <div className="rpg-dialogue-box__name-tag">
             <span>{characterName}</span>
           </div>
@@ -53,7 +56,7 @@ export default function DialogueBox({
                 ariaLabel="Continuar al siguiente diálogo"
                 className="cozy-btn--dialogue"
               >
-                Continuar 🐾
+                Continuar
               </CozyButton>
             </div>
           )}
@@ -62,4 +65,3 @@ export default function DialogueBox({
     </div>
   );
 }
-

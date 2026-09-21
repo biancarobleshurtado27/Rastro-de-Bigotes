@@ -3,7 +3,8 @@ import React from "react";
 /**
  * components/MapLegend.jsx
  * 
- * Leyenda visual compacta que explica los tipos de casillas y elementos del mapa:
+ * Leyenda visual de casillas sin emojis.
+ * Utiliza muestras cuadradas con las mismas texturas y colores del juego:
  * - Suelo
  * - Pared
  * - Objeto
@@ -12,22 +13,20 @@ import React from "react";
  */
 export default function MapLegend() {
   const legendItems = [
-    { label: "Suelo", className: "legend-sample--floor" },
-    { label: "Pared", className: "legend-sample--wall" },
-    { label: "Objeto", className: "legend-sample--object", icon: "✨" },
-    { label: "Salida", className: "legend-sample--exit", icon: "🚪" },
-    { label: "Mishi", className: "legend-sample--mishi", icon: "🐱" },
+    { label: "Suelo", className: "legend-swatch--floor" },
+    { label: "Pared", className: "legend-swatch--wall" },
+    { label: "Objeto", className: "legend-swatch--object" },
+    { label: "Salida", className: "legend-swatch--exit" },
+    { label: "Mishi", className: "legend-swatch--mishi" },
   ];
 
   return (
     <div className="map-legend" role="region" aria-label="Leyenda de la cuadrícula">
-      <span className="map-legend__title">🗺️ Leyenda del mapa:</span>
+      <span className="map-legend__title">Leyenda del mapa:</span>
       <div className="map-legend__items">
         {legendItems.map((item) => (
           <div key={item.label} className="map-legend__item">
-            <span className={`map-legend__sample ${item.className}`}>
-              {item.icon || null}
-            </span>
+            <span className={`map-legend__swatch ${item.className}`} aria-hidden="true" />
             <span className="map-legend__label">{item.label}</span>
           </div>
         ))}
@@ -35,4 +34,3 @@ export default function MapLegend() {
     </div>
   );
 }
-

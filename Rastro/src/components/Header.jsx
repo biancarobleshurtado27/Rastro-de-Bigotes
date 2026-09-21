@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
+import PixelMishi from "./PixelMishi";
 
 /**
  * components/Header.jsx
  * 
  * Cabecera accesible del juego.
- * Muestra el logotipo de Mishi, el título principal "Rastro de Bigotes"
- * y contiene la barra de navegación para moverse entre pantallas.
+ * Muestra el logotipo con Mishi pixel art (hecho con CSS, sin emojis),
+ * el título principal "Rastro de Bigotes" y la barra de navegación.
  */
 export default function Header() {
   return (
@@ -15,8 +16,7 @@ export default function Header() {
       <div className="rpg-header__brand">
         <Link to="/" className="rpg-header__logo-link" aria-label="Ir a la portada de Rastro de Bigotes">
           <div className="rpg-header__cat-emblem" aria-hidden="true">
-            <span className="cat-emblem-face">🐱</span>
-            <span className="cat-emblem-bow">🎀</span>
+            <PixelMishi direction="down" size="small" />
           </div>
           <div className="rpg-header__titles">
             <h1 className="rpg-header__title">Rastro de Bigotes</h1>
@@ -29,4 +29,3 @@ export default function Header() {
     </header>
   );
 }
-

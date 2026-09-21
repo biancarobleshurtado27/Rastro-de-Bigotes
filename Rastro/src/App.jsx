@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import Instructions from "./pages/Instructions";
 import Game from "./pages/Game";
@@ -9,37 +9,36 @@ import Completion from "./pages/Completion";
 /**
  * App.jsx
  * 
- * Componente raíz de la aplicación.
- * Configura el enrutador de React (`BrowserRouter`) y define las rutas principales:
- * - `/`             -> Pantalla de Inicio (Home)
- * - `/instrucciones` -> Guía y Controles (Instructions)
- * - `/jugar/:mapa`  -> Pantalla de Juego dinámica con parámetro de mapa (Game)
- * - `/completado`   -> Pantalla de Victoria y Reencuentro (Completion)
- * - `*`             -> Redirección al Inicio si la URL no coincide
+ * Componente principal de la aplicación.
+ * Configura el enrutador BrowserRouter y define las 4 rutas obligatorias:
+ * - `/`             -> Pantalla principal del juego (Home)
+ * - `/instrucciones` -> Página con las instrucciones (Instructions)
+ * - `/jugar/:mapa`  -> Página de juego con parámetro dinámico (Game)
+ * - `/completado`   -> Página del final del juego (Completion)
  */
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="app-container">
-        {/* Barra de navegación superior fija en todas las vistas */}
-        <Navbar />
+      <div className="cozy-app-container">
+        {/* Cabecera persistente con logotipo y navegación */}
+        <Header />
 
-        {/* Contenido dinámico según la ruta activa */}
-        <main className="main-content">
+        {/* Zona principal donde se renderizan las páginas según la ruta activa */}
+        <main className="cozy-main-view">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/instrucciones" element={<Instructions />} />
             <Route path="/jugar/:mapa" element={<Game />} />
             <Route path="/completado" element={<Completion />} />
-            {/* Si el usuario ingresa una ruta desconocida, lo redirigimos a inicio */}
+            {/* Redirección al inicio ante cualquier ruta no reconocida */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
 
-        {/* Pie de página retro */}
-        <footer className="retro-footer">
-          <p>🐾 Rastro de Bigotes • Videojuego 2D con React y CSS Grid</p>
-          <p>Mishi &amp; Yosu © 2026</p>
+        {/* Pie de página sutil y tierno */}
+        <footer className="cozy-app-footer" role="contentinfo">
+          <p>🐾 Rastro de Bigotes • Videojuego 2D Cozy en React</p>
+          <small>Mishi buscando a Yosu © 2026</small>
         </footer>
       </div>
     </BrowserRouter>

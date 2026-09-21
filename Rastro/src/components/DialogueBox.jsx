@@ -1,96 +1,65 @@
 import React from "react";
+import CharacterPortrait from "./CharacterPortrait";
+import CozyButton from "./CozyButton";
 
 /**
  * components/DialogueBox.jsx
  * 
- * Cuadro de diálogo clásico para RPGs acogedores.
- * Diseñado con:
- * - Fondo de café oscuro semitransparente.
- * - Borde pixelado doble en tonos durazno y crema pastel.
- * - Sombra sólida/dura retro pixel art.
- * - Placa destacada con el nombre del personaje.
- * - Retrato pixel art de Mishi con su moño rosa.
- * - Animación de aparición de texto suave.
- * - Botón "Continuar 🐾" o acción de avance.
+ * Cuadro de diálogo interactivo estilo RPG clásico de exploración.
+ * 
+ * Props obligatorias:
+ * @param {string} characterName Nombre del personaje que habla (ej: "Mishi").
+ * @param {string} message Mensaje o línea de diálogo.
+ * @param {string} portrait Expresión o tipo de retrato.
+ * @param {Function} onNext Función que se ejecuta al presionar el botón de avance.
+ * @param {boolean} showNextButton Si debe mostrarse el botón "Continuar".
  */
 export default function DialogueBox({
-  speaker = "Mishi",
-  text = "",
-  currentIndex = 0,
-  total = 1,
-  isLast = false,
-  isFinished = false,
+  characterName = "Mishi",
+  message = "",
+  portrait = "normal",
   onNext,
-  onFinishAction,
-  finishButtonText = "Continuar el viaje 🐾",
+  showNextButton = true,
 }) {
   return (
-    <div className="cozy-dialogue-wrapper">
-      <div className="cozy-dialogue-box">
-        {/* Retrato pixel art del personaje */}
-        <div className="cozy-dialogue__portrait-frame">
-          <div className="cozy-dialogue__portrait">
-            <div className="portrait-sprite-cat">
-              <span className="portrait-cat-face">🐱</span>
-              <span className="portrait-cat-ribbon">🎀</span>
-            </div>
-          </div>
-          <div className="cozy-dialogue__speaker-tag">
-            {speaker}
+    <div
+      className="rpg-dialogue-box-container"
+      role="region"
+      aria-label={`Diálogo de ${characterName}`}
+    >
+      <div className="rpg-dialogue-box">
+        {/* Retrato pixel art a la izquierda */}
+        <div className="rpg-dialogue-box__portrait-col">
+          <CharacterPortrait character={characterName} expression={portrait} size="medium" />
+          <div className="rpg-dialogue-box__name-tag">
+            <span>{characterName}</span>
           </div>
         </div>
 
-        {/* Cuerpo del diálogo */}
-        <div className="cozy-dialogue__body">
-          <div className="cozy-dialogue__text-container">
-            <p key={text} className="cozy-dialogue__text-animated">
-              "{text}"
+        {/* Mensaje y controles */}
+        <div className="rpg-dialogue-box__content-col">
+          <div className="rpg-dialogue-box__speech-bubble">
+            <p key={message} className="rpg-dialogue-box__text">
+              "{message}"
             </p>
           </div>
 
-          {/* Pie del diálogo: Contador y Botón Continuar */}
-          <div className="cozy-dialogue__footer">
-            <div className="cozy-dialogue__progress-indicator">
-              <span className="dot-active">🐾</span>
-              <span className="progress-numbers">
-                {currentIndex + 1} / {total}
-              </span>
+          {/* Botón Continuar */}
+          {showNextButton && (
+            <div className="rpg-dialogue-box__action-row">
+              <CozyButton
+                onClick={onNext}
+                variant="accent"
+                ariaLabel="Continuar al siguiente diálogo"
+                className="cozy-btn--dialogue"
+              >
+                Continuar 🐾
+              </CozyButton>
             </div>
-
-            <div className="cozy-dialogue__btn-group">
-              {!isLast && !isFinished && (
-                <button
-                  type="button"
-                  onClick={onNext}
-                  className="cozy-rpg-btn cozy-rpg-btn--continue"
-                >
-                  Continuar 🐾
-                </button>
-              )}
-
-              {isLast && !isFinished && (
-                <button
-                  type="button"
-                  onClick={onNext}
-                  className="cozy-rpg-btn cozy-rpg-btn--accent"
-                >
-                  Continuar 🐾
-                </button>
-              )}
-
-              {isFinished && (
-                <button
-                  type="button"
-                  onClick={onFinishAction}
-                  className="cozy-rpg-btn cozy-rpg-btn--primary"
-                >
-                  {finishButtonText}
-                </button>
-              )}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+

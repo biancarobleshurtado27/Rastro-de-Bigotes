@@ -4,98 +4,79 @@ import { Link } from "react-router-dom";
 /**
  * pages/Instructions.jsx
  * 
- * Guía de juego inspirada en un cuaderno de campo / diario de viaje acogedor.
- * Explica de forma tierna las mecánicas, los controles y la filosofía relajante
- * (sin combate, sin vidas, sin frustraciones).
+ * Página de instrucciones didáctica y acogedora.
+ * Explica las reglas de exploración, controles por teclado y botones en pantalla,
+ * la cuadrícula y la filosofía libre de derrota.
  */
 export default function Instructions() {
   return (
-    <div className="page page--rpg-journal">
-      <div className="cozy-journal-container">
-        {/* Cabecera del Diario */}
-        <header className="journal-header">
-          <div className="journal-ribbon">📖 Notas de Viaje</div>
-          <h1 className="journal-title">Diario de Aventuras de Mishi</h1>
-          <p className="journal-subtitle">
-            Consejos y observaciones para seguir el rastro de bigotes sin prisas.
+    <div className="page page--instructions">
+      <div className="cozy-guide-card">
+        {/* Encabezado */}
+        <header className="guide-header">
+          <div className="guide-header__badge">📖 Guía del Jugador</div>
+          <h2 className="guide-header__title">Cómo jugar a Rastro de Bigotes</h2>
+          <p className="guide-header__subtitle">
+            Una guía sencilla y tranquila para acompañar a Mishi en su travesía.
           </p>
         </header>
 
-        {/* Páginas del diario en pergamino cálido */}
-        <div className="journal-pages-grid">
-          {/* 1. Misión de Amor */}
-          <div className="journal-card">
-            <div className="journal-card__header">
-              <span className="journal-card__stamp">🐾 01</span>
-              <h3 className="journal-card__title">La Misión de Mishi</h3>
-            </div>
-            <p className="journal-card__text">
-              Yosu ha desaparecido y Mishi ha decidido salir a buscarlo. A lo largo de tres zonas
-              (la habitación, los tejados y el jardín de Yosu), deberás resolver pequeños puzzles
-              de observación e interactuar con objetos nostálgicos para abrirte paso.
+        {/* Bloques de Explicación Didácticos */}
+        <div className="guide-grid">
+          {/* Misión */}
+          <div className="guide-section">
+            <div className="guide-section__icon-badge">🎯</div>
+            <h3 className="guide-section__title">1. La Misión de Mishi</h3>
+            <p className="guide-section__text">
+              La protagonista es <strong>Mishi</strong>, quien ha decidido salir a buscar a su pareja, <strong>Yosu</strong>.
+              El juego se desarrolla a lo largo de <strong>tres mapas</strong>: la Casa de Mishi, los techos y el vecindario, y finalmente la Casa de Yosu.
             </p>
           </div>
 
-          {/* 2. Controles de exploración */}
-          <div className="journal-card">
-            <div className="journal-card__header">
-              <span className="journal-card__stamp">🎮 02</span>
-              <h3 className="journal-card__title">Cómo Mover a Mishi</h3>
-            </div>
-            <p className="journal-card__text">
-              Puedes desplazarte tranquilamente por el mundo de dos maneras:
+          {/* Cuadrícula y Movimiento */}
+          <div className="guide-section">
+            <div className="guide-section__icon-badge">🗺️</div>
+            <h3 className="guide-section__title">2. Movimiento en la Cuadrícula</h3>
+            <p className="guide-section__text">
+              El jugador se moverá casilla por casilla en una cuadrícula:
             </p>
-            <ul className="journal-list">
-              <li><strong>Teclado:</strong> Usa las flechas (⬅️ ⬆️ ⬇️ ➡️) o las teclas <code>W</code>, <code>A</code>, <code>S</code>, <code>D</code>.</li>
-              <li><strong>Táctil / Pantalla:</strong> Botones grandes tipo consola retro pensados para teléfonos y pantallas pequeñas.</li>
-              <li><strong>Clic en casillas:</strong> Haz clic en cualquier baldosa adyacente a Mishi para que camine hacia ella.</li>
+            <ul className="guide-list">
+              <li><strong>En computadora:</strong> Usa las <strong>flechas del teclado</strong> (⬅️ ⬆️ ⬇️ ➡️) o las teclas <code>W</code>, <code>A</code>, <code>S</code>, <code>D</code>.</li>
+              <li><strong>En pantallas táctiles:</strong> Dispondrás de <strong>botones de movimiento en pantalla</strong> grandes y cómodos.</li>
             </ul>
           </div>
 
-          {/* 3. Interacción */}
-          <div className="journal-card">
-            <div className="journal-card__header">
-              <span className="journal-card__stamp">🔍 03</span>
-              <h3 className="journal-card__title">Examinar Objetos</h3>
-            </div>
-            <p className="journal-card__text">
-              Cuando te acerques a un objeto especial (camas, ovillos de lana, chimeneas, faroles o ventanas),
-              aparecerá una burbuja flotante <strong>[E] Examinar</strong>. Presiona la barra espaciadora, la tecla <code>E</code> o el botón 🐾 en pantalla para descubrir recuerdos y pistas.
+          {/* Interacción */}
+          <div className="guide-section">
+            <div className="guide-section__icon-badge">🐾</div>
+            <h3 className="guide-section__title">3. Acercarse e Interactuar</h3>
+            <p className="guide-section__text">
+              Para resolver los misterios, debes acercarte a los objetos decorativos (muebles, ventanas, ovillos, huellas)
+              e interactuar con ellos para descubrir pistas que te permitirán desbloquear el paso al siguiente mapa.
             </p>
           </div>
 
-          {/* 4. Filosofía Cozy y Cero Frustración */}
-          <div className="journal-card journal-card--highlight">
-            <div className="journal-card__header">
-              <span className="journal-card__stamp">🌸 04</span>
-              <h3 className="journal-card__title">Filosofía Relajante (Cozy)</h3>
-            </div>
-            <ul className="journal-list">
-              <li><strong>Sin vidas ni muerte:</strong> No hay enemigos, monstruos, combates ni pantallas de derrota.</li>
-              <li><strong>Reintentos infinitos:</strong> Si te atascas, puedes reiniciar la habitación cuantas veces desees.</li>
-              <li><strong>Botón de pista cariñosa:</strong> En la barra superior encontrarás el botón <code>💡 ¿Pista?</code> que te brindará un susurro de ayuda cuando lo necesites.</li>
+          {/* Filosofía Cozy */}
+          <div className="guide-section guide-section--cozy">
+            <div className="guide-section__icon-badge">🌸</div>
+            <h3 className="guide-section__title">4. Una Experiencia Tranquila</h3>
+            <ul className="guide-list">
+              <li><strong>Sin vidas ni derrota:</strong> No existe "Game Over", muertes ni límites de tiempo.</li>
+              <li><strong>Reintentos libres:</strong> Los puzzles pueden intentarse nuevamente tantas veces como desees.</li>
+              <li><strong>Sistema de pistas:</strong> Si te quedas atascado durante un tiempo, aparecerá un botón de pista para orientarte con cariño.</li>
             </ul>
           </div>
         </div>
 
-        {/* Muestra visual del D-pad acogedor */}
-        <div className="journal-dpad-sample">
-          <span className="dpad-sample-badge">Vista previa de controles táctiles:</span>
-          <div className="sample-dpad-visual">
-            <span className="sample-btn">⬆️</span>
-            <div className="sample-row">
-              <span className="sample-btn">⬅️</span>
-              <span className="sample-btn sample-btn--paw">🐾</span>
-              <span className="sample-btn">➡️</span>
-            </div>
-            <span className="sample-btn">⬇️</span>
-          </div>
-        </div>
+        {/* Resumen del objetivo */}
+        <div className="guide-footer-callout">
+          <p className="callout-text">
+            ✨ El único objetivo es disfrutar de una aventura tranquila, cálida y resolver los puzzles a tu propio ritmo.
+          </p>
 
-        {/* Llamada a la acción al pie */}
-        <div className="journal-footer-action">
-          <Link to="/jugar/casa-mishi" className="cozy-rpg-btn cozy-rpg-btn--hero">
-            🐾 ¡Comenzar el viaje en la Casa de Mishi!
+          {/* Botón Comenzar juego */}
+          <Link to="/jugar/casa-mishi" className="cozy-btn cozy-btn--hero">
+            🐾 Comenzar juego
           </Link>
         </div>
       </div>
